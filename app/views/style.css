@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'SaunaMonoPro';
+    src: url('../../fonts/SaunaMonoPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+  
+body {
+    font-family: 'NombreDeTuFuente', sans-serif; /* Asegúrate de tener una fuente alternativa */
+}
+  
