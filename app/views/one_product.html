@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />  
 
     <link rel="stylesheet" href="/app/views/styles/styles.css"/>
-    <link rel="stylesheet" href="/app/views/styles/style_cart.css"/>
+    <link rel="stylesheet" href="/app/views/styles/style_one_product.css"/>
     
     <!-- MODALES  -->
     <!-- Modal log in -->
@@ -250,109 +250,79 @@
     <h3 class="text"></h3>
 
     <!-- cards -->
-    <div class="container">
-        <div class="row">
-            <div class="col">
-              <div class="media border p-3 cart-product">
-                <div class="image-container"">
-                  <img
-                    src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812638_400.jpg"
-                    alt="imagen_produco"
-                    class="mr-3 mt-3"
-                  />
-                </div>
-                <div class="media-body">
-                    <h4>
-                      23 University Grey
-                    </h4>
-                    <!-- Aqui van los inputs -->
-                    <div>
-                      COLOR: Grey
-                    </div>
-                    <div>
-                      SIZE: S
-                    </div>
-                    <div>
-                      QUANTITY: 1
-                    </div>
-                    <br>
-                    <div>
-                      <a class="edit" href="">Edit</a>
-                    </div>
-                    <div class="trash-icon-container">
-                      <a href="#" class="trash-icon">
-                        <span class="material-symbols-outlined">
-                          delete
-                        </span>
-                      </a>
-                    </div>
-                </div>
-                <div class="product-price">
-                  <h4>$400</h4>
-                </div>
-              </div>
-              <div class="media border p-3 cart-product">
-                  <div class="image-container"">
-                    <img
-                      src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812638_400.jpg"
-                      alt="imagen_produco"
-                      class="mr-3 mt-3"
-                    />
-                  </div>
-                <div class="media-body">
-                    <h4>
-                      23 University Grey
-                    </h4>
-                    <!-- Aqui van los inputs -->
-                    <div>
-                      COLOR: Grey
-                    </div>
-                    <div>
-                      SIZE: S
-                    </div>
-                    <div>
-                      QUANTITY: 1
-                    </div>
-                    <br>
-                    <div>
-                      <a class="edit" href="">Edit</a>
-                    </div>
-                    <div class="trash-icon-container">
-                      <a href="#" class="trash-icon">
-                        <span class="material-symbols-outlined">
-                          delete
-                        </span>
-                      </a>
-                    </div>
-                </div>
-                <div class="product-price">
-                  <h4>$400</h4>
-                </div>
-              </div>
+    <div class="container custom-container">
+      <div class="row">
+        <!-- Imagenes producto  -->
+        <div class="col-md-4">
+          <div class="border p-3 cart-product">
+            <div class="image-container">
+              <img
+                src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812637_1000.jpg?c=3"
+                alt="imagen_produco"
+                class="mr-3 mt-3"
+              />
             </div>
-            <div class="col-lg-4">
-                <div class="media border p-3 card-tres" >
-                    <div class="media-body" style="border: none;">
-                      <h4>YOUR ORDER SUMMARY</h4>
-                      <div class="price-line">
-                          <span>Subtotal:</span>
-                          <span class="value">200 USD</span>
-                      </div>
-                      <div class="price-line">
-                          <span>Shipping:</span>
-                          <span class="value">60 USD</span>
-                      </div>
-                      <h5 class="total-price">Total: <span class="value">$1,000</span></h5>
-                      <div class="btn-container-card">
-                        <button id="btn1card" type="button" class="btn btn-dark btn-card-tres">CHECKOUT</button> <br>
-                      </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+        <!-- Imagenes producto -->
+        <div class="col-md-4">
+          <div class="border p-3 cart-product">
+            <div class="image-container">
+              <img
+                src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812640_1000.jpg?c=3"
+                alt="imagen_produco"
+                class="mr-3 mt-3"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- Info del producto -->
+        <div class="col-md-4">
+          <div class="border p-3 card-tres">
+            <h4>23 Varsity Gray Xd</h4>
+            <h4>$399</h4>
+            <p>Descripción del producto</p>
+            <div class="sizes">
+              SIZES:
+              <div class="size-buttons">
+                <button class="size-btn">XS</button>
+                <button class="size-btn active">S</button>
+                <button class="size-btn">M</button>
+                <button class="size-btn">L</button>
+                <button class="size-btn">XL</button>
+              </div>
+            </div>
+            <div class="product-actions">
+              <button id="btn1card" type="button" class="btn btn-dark btn-add-to-bag">ADD TO BAG</button>
+              <button class="btn btn-outline-dark btn-favorite">
+                <span class="material-symbols-outlined">
+                  favorite
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>        
+      </div>
+      <!-- Mas imagenes  -->
+      <div class="row">
+        <!-- Tarjeta de producto 3 -->
+        <div class="col-md-4">
+          <div class="border p-3 cart-product">
+            <div class="image-container">
+              <img
+                src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812646_1000.jpg?c=3"
+                alt="imagen_producto"
+                class="mr-3 mt-3"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- Espacio vacío debajo del resumen del pedido para alinear la grilla -->
+        <div class="col-md-4">
+        </div>
+      </div>
     </div>
     <br>
     <br>
-
   </body>
 </html>

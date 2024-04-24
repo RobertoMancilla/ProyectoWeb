@@ -1,139 +1,145 @@
-/* Shopping Cart.html -  styles---------*/
-/* cart styles cards left side */
-/* .container{
-    /* background-color: red;
-} */
+.custom-container {
+    max-width: 100%; 
+    margin-left: 0 !important; 
+    margin-right: 0 !important;
+}
 
+/* Eliminar los paddings internos de las columnas de Bootstrap */
+.custom-container .row > [class^='col-'] {
+padding-left: 0 !important; 
+padding-right: 0 !important; 
+}
+
+/* Estilos para las tarjetas de los productos */
 .cart-product {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    /* background-color: #e6e6e6ee; Color de fondo del card */
-    padding: 15px; /* Espaciado interno del card */
-    /* size things */
-    width: 100%;
-}
-/* Estilos de la imagen container cards */
-.image-container {
-    width: 200px;
-    height: 200px;
-    overflow: hidden; /*Para que la imagen no salga del div*/
-    /* margenes */
-    margin-right: 4.5%;
-    margin-left: 4.5%;
+    margin-bottom: 0; /* Elimina el margen inferior para evitar espacio extra entre las tarjetas */
 }
 
+/* Centrar la imagen en la tarjeta y ajustar el tamaño del contenedor de la imagen */
+.image-container {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    width: 100%; 
+    height: auto; /*mantener la proporción */
+    overflow: hidden;
+    margin: 0; /* Eliminar margenes para centrar */
+}
+
+/* Estilo para las imágenes dentro de los contenedores de imágenes */
 .image-container img {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: cover;
 }
 
-.media-body {
-    border-left: 1px solid #dee1e5;
-    padding: 0;
-    padding-left: 10px;
-    flex-grow: 1; /* Ocupa el espacio disponible */
-    font-size: 15px;
+/* Estilo para la info */
+.card-tres {
+    padding: 15px;
+    border: none !important; /* Borde del card */
+    margin-left: 30px;
 }
 
-.edit{
-    text-decoration: underline;
-}
-.edit:hover{
-    text-decoration: none;
-    color: black;
+
+/* TEXT YOUR SHIPPING BAG */
+.text{
+    margin-top: 130px; 
 }
 
-.product-price {
-    text-align: right; /* Alinea el precio a la derecha */
-    flex-basis: 100px;
+.btn-container-card {
+    display: flex;
+    align-items: center;
 }
 
-/* Propiedades del nombre del producto en mi carrito*/
-.cart-product h4 {
-    margin-bottom: 23px;
-    font-size: 20px;
-    /* border: solid 1px red; */
+#btn1card {
+    width: 60%;
 }
 
-/* Trash can icon */
-.trash-icon-container {
-    position: absolute; /* Posicionamiento absoluto respecto a su contenedor más cercano con posición relativa/absoluta */
-    bottom: 15px; /* Distancia desde la parte inferior del contenedor */
-    right: 15px; /* Distancia desde la parte izquierda del contenedor */
+.sizes {
+    margin-top: 50px; /* Ajusta según necesites */
+    font-size: 14px;
 }
   
-.trash-icon {
-    display: flex; /* Asegura que el ícono y el texto estén alineados correctamente si es necesario */
-    align-items: center; /* Alineación vertical */
-    color: rgb(19, 19, 19);
+.size-buttons {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 15px; 
 }
-.trash-icon:hover {
-    color: rgb(71, 71, 71);
+  
+.size-btn {
+    background-color: #E7E7E7;
+    border: none;
+    margin-right: 6px; /* Espacio entre botones */
+    padding: 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.size-btn.active {
+    background-color: #232323;
+    color: #fff;
+}
+  
+.size-btn:hover {
+    background-color: #E2DCC9;
+    color: black;
+}
+  
+.product-actions {
+    display: flex;
+    align-items: center;
+    justify-content: start; /* Cambiado a 'start' para evitar que los botones se separen */
+    margin-top: 40px;
+}
+  
+.btn-add-to-bag, .btn-favorite {
+    padding: 6px 10px; /* Reducido para disminuir la altura */
+    font-size: 16px; /* Tamaño del texto */
+    vertical-align: middle;
+    border-radius: 2px; /* Añade un radio de borde si lo deseas */
+    margin-right: 5px; /* Espacio entre botones, ajusta según necesidad */
+}
+
+.btn-favorite {
+    /* background-color: #E7E7E7; */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border: none;
+    height: 40px; /* Reducido para hacer el botón más pequeño */
+    padding: 0; /* El padding se puede eliminar si la altura está definida */
 }
 
 .material-symbols-outlined {
     font-size: 24px; /* Tamaño del ícono */
 }
 
-.container{
-    margin-top: 0;
+.btn-add-to-bag:hover {
+    background-color: #333;
 }
 
-/* THIRD CARD (resume)*/
-.card-tres .media-body{
-    position: relative;
+.btn-favorite:hover {
+    color: black;
+    background-color: #E2DCC9;
 }
 
-.media-body h4{
+.product-info-tabs {
+    display: flex;
+    align-items: flex-end; /* Alinea los títulos de las pestañas en la parte inferior */
+    gap: 30px; /* Espacio entre las pestañas */
+  }
+  
+.tab-title {
+    margin: 0;
+    padding-bottom: 5px; /* Espacio entre el título y la línea subrayada */
+    border-bottom: 2px solid transparent; /* Borde invisible por defecto */
+    cursor: pointer; /* Cambia el cursor a un puntero para indicar que es clickeable */
     font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 15px;
 }
 
-.card-tres {
-    margin-top: 0;
-    border: none !important; /* Borde del card */
-    width: 100%;
+.tab-title.active {
+    border-bottom: 2px solid black; /* La pestaña activa tiene una línea subrayada */
 }
 
-/* Acomodar Subtotal and shippog */
-.price-line {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px; /* Ajusta según sea necesario para el espaciado vertical */
-}
-
-.total-price {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-.value {
-    text-align: right;
-}
-
-.btn-container-card {
-    text-align: center;
-}
-
-#btn1card {
-    width: 100%;
-}
-
-.btn-container-card {
-    text-align: center;
-}
-
-/* TEXT YOUR SHIPPING BAG */
-.text{
-    margin-top: 130px;
-    margin-left: 6%;
-    margin-bottom: 15px;
-    font-size: 26px;
-}
+  
