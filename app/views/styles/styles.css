@@ -1,0 +1,227 @@
+@font-face {
+    font-family: 'Inconsolata';
+        src : url('/app/views/fonts/Inconsolata.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+ 
+body {
+    font-family: "Inconsolata", 'Times New Roman', Times, serif;
+}
+
+/* Texto "You dont have an account" from the log in modal */
+#text {
+    font-size: 15px;
+    text-align: center;
+    color: rgb(35, 35, 35);
+}
+/* Texto "sign up here" from the modal Log in modal */
+#text_sign_up {
+    color: rgb(59, 59, 255);
+    text-decoration: underline;
+}
+
+/* div from the button submit from the modal */
+#btn_submit_modal {
+    text-align: center;
+}
+
+/* Navigation bar */
+/* basic */
+.navbar-nav .nav-link {
+    font-size: 17px;
+    text-align: center; 
+}
+
+.navbar {
+    /* border-top: 1px solid black !important;  */
+    display: block; /* Ensures each container-fluid stacks vertically */
+    background-color: white !important;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-collapse {
+    flex-grow: 1;
+    justify-content: center;
+    margin-left: 13px;
+}
+
+.navbar-nav {
+    justify-content: center;
+    width: 100%; /* Ensures nav items can be centered properly */
+}
+
+.navbar-brand {
+    margin-left: 40px !important;
+    /* border: 1px solid red; */
+}
+
+.navbar-brand img {
+    /* margin-left: 18%; */
+    width: auto; /* Keep the original aspect ratio */
+    height: 50px; 
+    max-height: 100%; /* Ensure the logo doesn't exceed the navbar's height */
+}
+
+.iconos{
+    display: flex; /* Asegurarse de que se comporta como un flexbox */
+    justify-content: flex-end;
+    flex-grow: 1; 
+    margin-right: 20px;
+}
+
+.iconos a, .iconos span{
+    color: black;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.iconos span:hover{
+    color: rgb(71, 71, 71);
+}
+
+.iconos #log_in:hover{
+    text-decoration: underline;
+}
+
+.nav-item{
+    margin-right: 15px;
+    height: 40px;
+}
+
+.nav-item:hover{
+    text-decoration: underline;
+    background-color: #E2DCC9;
+    border-radius: 4px;
+}
+
+/* end navigator bar */
+
+/* Images between sections*/
+.image-container {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+    margin-top: 0; 
+    margin-bottom: 0;
+    margin-left: 60px; 
+    margin-right: 60px;
+    /* border: 2px solid red; */
+}
+
+.image-container img {
+    width: 100%; /* Asegura que la imagen siempre llene el ancho del contenedor */
+    height: 100%; /* Asegura que la imagen siempre llene la altura del contenedor */
+    object-fit: cover; /* Esto asegurará que la imagen cubra completamente el contenedor sin deformarse */
+}
+
+.image-container_2 {
+    overflow: hidden; /* Esto ocultará cualquier parte de la imagen que exceda del contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%; /* Altura fija para el contenedor */
+    margin-top: 0; 
+    margin-bottom: 0;
+    margin-left: 60px; 
+    margin-right: 60px;
+    /* object-fit no es necesario aquí */
+}
+
+.image-container_2 img {
+    width: 100%; /* Asegura que la imagen siempre llene el ancho del contenedor */
+    height: 100%; /* Asegura que la imagen siempre llene la altura del contenedor */
+    object-fit: cover; /* Esto asegurará que la imagen cubra completamente el contenedor sin deformarse */
+}
+
+.img-fluid {
+    object-fit: cover; /* Ensures the image covers the area of the container without distorting aspect ratio */
+}
+
+/* Imagenes productos */
+/* .products_images{
+    background-color: rgb(68, 68, 68);
+   
+} */
+
+.products_images .row [class*='col-'] {
+    padding: 0;
+} 
+
+/* Propiedades de las img en las cards */
+.card-img-top {
+    width: 100%;
+    height: 15%;
+    object-fit: cover; /*contain | lenar las cards con las imagenes*/
+    border-radius: 0;
+}
+
+.card {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    /* max-height: 250px; */
+}
+
+/* texto - container con lo demas */
+.texto { 
+    margin-left: 60px;
+    margin-top: 0;
+}
+.texto h3, a{
+    text-decoration: none;
+    color: black;
+}
+.texto p{
+    text-decoration: underline;
+    margin-bottom: 8%;
+    font-size: 14px;
+}
+.texto h3{
+    font-size: 25px;
+}
+
+.encabezado{
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos en el centro */
+    margin-left: 60px;
+}
+
+.encabezado a{
+    display: inline-flex;
+    align-items: center; 
+    text-decoration: underline;
+    font-size: 15px;
+    margin-left: 20px; 
+}
+
+.encabezado img{
+    margin-left: 5px;
+}
+
+h5 {
+    color: black;
+    margin: 0; /* Elimina márgenes predeterminados para ajustar la alineación */
+    text-decoration: none;
+}
+
+.encabezado a:hover{
+    text-decoration: underline;
+    background-color: #E2DCC9;
+    border-radius: 4px;
+    color: black;
+    padding: .5px;
+}
+
+.texto a:hover{
+    color: rgb(71, 71, 71);
+}
+

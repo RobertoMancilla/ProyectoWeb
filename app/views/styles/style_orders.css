@@ -1,0 +1,72 @@
+/* container padre de la card pedido */
+.button-card {
+    width: 100%;
+}
+/* Estilos personalizados para las tarjetas */
+.navbar-below {
+    padding-top: 20px; 
+    /* background-color: aqua; */
+}
+/* border buttom del nav y del card */
+.navbar-border {
+    border-bottom: solid 1px rgb(220, 219, 219);
+    width: 100%;
+}
+/* Color de la letra de texto key y margenes entre ellos (My order | Order Date...) */
+.key-myOrder {
+    color: rgb(74, 69, 69);
+    margin-right: 80px;
+}
+/* Color de la letra de texto value y margenes entre ellos (2020 | 10/09/2020...) */
+.value-myOrder {
+    color: rgb(108, 108, 108);
+    margin-right: 80px;
+}
+/* margenes del boton see details */
+.btn-style {
+    margin: auto;
+    margin-right: 40px;
+    font-family: serif;
+}
+/* boton order again margenes*/
+#btn-order-a{
+    margin: auto;
+}
+/* poner una font family */
+#mynavbar2 {
+    font-family: sans-serif;
+}
+/* margenes */
+#myOrder-text {
+    margin-left: 10px;
+}
+#myOrder-text-value {
+    margin-left: 10px;
+}
+
+/* Card con imagen y nombre producto, descripcion etc */
+/* Image product  */
+.image-container {
+    width: 130px;
+    height: 130px;
+    overflow: hidden;
+    border-radius: 15px;
+    /* margen */
+    margin-bottom: 20px;
+}
+.card-img-top {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.card-title {
+    margin-left: 30px;
+}
+.card-text {
+    margin-top: 20px;
+    margin-left: 40px;
+}
+
+
+  
