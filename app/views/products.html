@@ -197,10 +197,33 @@
       <div class="container-fluid">
           <!-- This empty div ensures that the flexbox space-between property pushes the logo to the center -->
           <!-- <div></div> -->
-          <a class="navbar-brand mx-auto" href="/app/views/home.html">
-              <img src="https://www.brandemia.org/wp-content/uploads/2011/09/logo_nike_principal.jpg" alt="Icono">
-          </a>
-          <div class="d-flex iconos">
+          <div class="w-25 px-5">
+            <a class="navbar-brand mx-auto" href="/app/views/home.html">
+                <img src="https://www.brandemia.org/wp-content/uploads/2011/09/logo_nike_principal.jpg" alt="Icono">
+            </a>
+          </div>
+          <div class="container-fluid w-50">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav ms-auto me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/app/views/home.html">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/app/views/orders.html">MY ORDERS</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/app/views/products.html">MEN</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/app/views/products.html">WOMEN</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+          <div class="d-flex iconos w-25">
               <a id="log_in" class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal1" style="width: 50px;">
                   Log in
               </a>
@@ -209,7 +232,7 @@
                   search
                 </span>
               </a>
-              <a href="">
+              <a href="wishlist.html">
                 <span class="material-symbols-outlined">
                   favorite
                 </span>
@@ -221,27 +244,7 @@
               </a>
           </div>
       </div>
-      <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse " id="navbarNav">
-              <ul class="navbar-nav ms-auto me-auto">
-                  <li class="nav-item">
-                      <a class="nav-link active" href="/app/views/home.html">HOME</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link active" href="/app/views/orders.html">MY ORDERS</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="/app/views/products.html">MEN</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="/app/views/products.html">WOMEN</a>
-                  </li>
-              </ul>
-          </div>
-      </div>
+      
     </nav>
     <!-- end nav bar -->
     

@@ -37,6 +37,8 @@ body {
     /* border-top: 1px solid black !important;  */
     display: block; /* Ensures each container-fluid stacks vertically */
     background-color: white !important;
+    background: #e0e0e0;
+    box-shadow:  0px 0px 40px 0px rgba(0, 0, 0, 0.2);
 }
 
 .container-fluid {
@@ -225,3 +227,6 @@ h5 {
     color: rgb(71, 71, 71);
 }
 
+.shadow-menu {
+    background-color: blue;
+}
