@@ -1,59 +1,52 @@
 const express = require('express');
 const router = express.Router();
+const Product = require('../controllers/products'); 
 
-router.post('/', (req, res) => {
-  const {id, title, description, price, category } = req.body;
-  if (!title || !description || !price || !category) {
-      res.status(400).json({ error: 'Missing required attributes: title, description, price, category' });
-      return;
-  }
-  const newProduct = {
-      id,
-      title,
-      description,
-      price,
-      category
-  };
-  dataHandler.createProduct(newProduct);
-  res.status(201).json({ message: `Product "${title}" created successfully` });
+
+router.post('/productos', async (req, res) => {
+    try {
+        const nuevoProducto = new Product(req.body); 
+        const productoGuardado = await nuevoProducto.save(); 
+        res.status(201).json(productoGuardado); 
+    } catch (error) {
+        console.error('Error al agregar producto:', error);
+        res.status(500).json({ error: 'Error al agregar producto' });
+    }
 });
 
-router.put('/:id', (req, res) => {
-  const productId = req.params.id;
-  const { title, description, price, category } = req.body;
-  const existingProduct = dataHandler.getProductById(productId);
-  if (!existingProduct) {
-      res.status(404).json({ error: 'Product not found' });
-      return;
-  }
 
-  if (!title || !description || !price || !category) {
-      res.status(400).json({ error: 'Missing required attributes: title, description, price, category' });
-      return;
-  }
-
-  existingProduct.title = title;
-  existingProduct.description = description;
-  existingProduct.price = price;
-  existingProduct.category = category;
-
-  dataHandler.updateProduct(productId, existingProduct);
-
-  res.status(200).json({ message: `Product "${existingProduct.title}" updated successfully` });
+router.get('/productos', async (req, res) => {
+    try {
+        const productos = await Product.find();
+        res.status(200).json(productos); 
+    } catch (error) {
+        console.error('Error al obtener productos:', error);
+        res.status(500).json({ error: 'Error al obtener productos' });
+    }
 });
 
-router.delete('/:id', (req, res) => {
-  const productId = req.params.id;
 
-  const existingProduct = dataHandler.getProductById(productId);
-  if (!existingProduct) {
-      res.status(404).json({ error: 'Product not found' });
-      return;
-  }
+router.put('/productos/:id', async (req, res) => {
+    const { id } = req.params; 
+    try {
+        const productoActualizado = await Product.findByIdAndUpdate(id, req.body, { new: true }); 
+        res.status(200).json(productoActualizado); 
+    } catch (error) {
+        console.error('Error al actualizar producto:', error);
+        res.status(500).json({ error: 'Error al actualizar producto' });
+    }
+});
 
-  dataHandler.deleteProduct(productId);
 
-  res.status(200).json({ message: `Product "${existingProduct.title}" deleted successfully` });
+router.delete('/productos/:id', async (req, res) => {
+    const { id } = req.params; 
+    try {
+        await Product.findByIdAndDelete(id); 
+        res.status(200).json({ message: 'Producto eliminado correctamente' }); 
+    } catch (error) {
+        console.error('Error al eliminar producto:', error);
+        res.status(500).json({ error: 'Error al eliminar producto' });
+    }
 });
 
 module.exports = router;
