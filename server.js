@@ -8,7 +8,7 @@ app.use(express.static('app'));
 app.use('/views', express.static('views'));
 app.use(router);
 
-const mongoConnection = "mongodb+srv://admin:Ago21@myapp.niayuxp.mongodb.net/MyAppDB";
+const mongoConnection = "mongodb+srv://admin:<password>@myapp.niayuxp.mongodb.net/MyAppDB";
 mongoose.connect(mongoConnection, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const productSchema = new mongoose.Schema({
