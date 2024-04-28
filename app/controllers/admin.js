@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", function() {
             stock: stock,
             sizes: sizes
         };
+        console.log(productData);
 
-        fetch("/guardar-producto", {
+        fetch("/admin/guardar-producto", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
