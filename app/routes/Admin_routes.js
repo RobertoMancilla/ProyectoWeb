@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('../controllers/products.js'); 
+const Product = require('../data/schema'); 
 
 router.use(express.json());
 
