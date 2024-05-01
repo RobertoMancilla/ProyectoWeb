@@ -7,10 +7,10 @@ const router = express.Router();
 
 router.use(bodyParser.json());
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => { // Haz la función manejadora asincrónica
     try {
-        arr = data_handler.getProducts();
-        res.json(arr);
+        let arr = await data_handler.getProducts(); // Espera a que se complete la obtención de productos
+        res.json(arr); // Envía los productos como respuesta JSON
     } catch (error) {
         console.error("Error al obtener los productos:", error.message);
         res.status(404).send("Ocurrió un error al obtener los productos");
