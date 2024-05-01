@@ -14,6 +14,6 @@ router.use('/products', productRouter);
 
 //añadir 
 router.use('/admin', adminProductRouter);
-router.get('/admin', (req, res) => res.sendFile(path.resolve(__dirname, '/../views/admin.html')));
+router.get('/admin', (req, res) => res.sendFile(path.resolve(__dirname, '../views/admin.html')));
 
 module.exports = router;

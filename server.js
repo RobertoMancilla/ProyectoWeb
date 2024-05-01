@@ -1,25 +1,19 @@
 const express = require('express');
-const path = require('node:path');
+const mongoose = require('mongoose');
 const router = require('./app/controllers/router');
-const mongoose = require('./app/data/bd_connection');
-const mongoConnection = require('./app/data/bd_connection');
-const connectToDatabase = require('./app/data/bd_connection');
 
 const app = express();
-const port = 3000;
 
 app.use(express.static('app'));
-app.use(express.static(path.join(__dirname, './app/views')));
-
-//middleware
+app.use('/views', express.static('views'));
 app.use(router);
 
-connectToDatabase();
+const mongoConnection = "mongodb+srv://admin:Ago21@myapp.niayuxp.mongodb.net/MyAppDB";
+mongoose.connect(mongoConnection, { useNewUrlParser: true, useUnifiedTopology: true });
 
-app.listen(port, () => {
-    console.log(`Servidor en ejecución en el puerto ${port}`);
+app.use(express.json());
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor en ejecución en el puerto ${PORT}`);
 });
-
-
-// // let mongoConnection = "mongodb+srv://admin:Tieso25@myapp.gt6xwtb.mongodb.net/MyAppDB"
-// mongoose.connect(mongoConnection);
