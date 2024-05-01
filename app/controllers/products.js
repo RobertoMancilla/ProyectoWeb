@@ -10,6 +10,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    imageUrl: {
+        type: String,
+        required: true
+    },
     price: {
         type: Number,
         required: true
@@ -20,6 +24,10 @@ const productSchema = new mongoose.Schema({
     },
     stock: {
         type: Number,
+        required: true
+    },
+    category: {
+        type: String,
         required: true
     },
     sizes: [String]
