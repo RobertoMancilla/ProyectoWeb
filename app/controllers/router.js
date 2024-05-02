@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const productRouter = require('../routes/products_routes.js');
 const adminProductRouter = require('../routes/Admin_routes.js');
+const signupRouter = require('../routes/sing_up.js')
 
 const router = express.Router();
 
@@ -11,6 +12,9 @@ router.get('/shopping_cart', (req, res) => res.sendFile(path.resolve(__dirname +
 
 //products
 router.use('/products', productRouter);
+
+//sign up
+router.use('/signup', signupRouter);
 
 //añadir 
 router.use('/admin', adminProductRouter);

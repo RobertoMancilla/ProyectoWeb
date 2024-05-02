@@ -111,84 +111,48 @@
     </div>
 
     <!-- Modal sign up-->
-    <div
-      class="modal fade"
-      id="myModalSignUp"
-      tabindex="-1"
-      aria-labelledby="modalTitleId"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="myModalSignUp" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalTitleId">Sign Up</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="signupForm">
               <!-- Nombre y apellidos en la misma fila -->
               <div class="row mb-3">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Name" />
+                  <input type="text" class="form-control" placeholder="Name" id="name" />
                 </div>
                 <div class="col">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Surname"
-                  />
+                  <input type="text" class="form-control" placeholder="Surname" id="surname" />
                 </div>
               </div>
               <!-- Email -->
               <div class="input-group mb-3">
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-envelope" style="color: #464646"></i
-                ></span>
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="Your Email"
-                  name="email"
-                  type="email"
-                />
+                <span class="input-group-text"><i class="fa-solid fa-envelope" style="color: #464646"></i></span>
+                <input type="email" class="form-control" placeholder="Your Email" id="email" />
               </div>
               <!-- Contraseña -->
               <div class="input-group mb-3">
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-key" style="color: #464646"></i
-                ></span>
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="New Password"
-                  name="psw"
-                />
+                <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
+                <input type="password" class="form-control" placeholder="New Password" id="password" />
               </div>
               <!-- Confirmar contraseña -->
               <div class="input-group mb-3">
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-key" style="color: #464646"></i
-                ></span>
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="Confirm Password"
-                  name="confirmPsw"
-                />
+                <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
+                <input type="password" class="form-control" placeholder="Confirm Password" id="confirmPassword" />
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
+            <button type="submit" form="signupForm" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
           </div>
         </div>
       </div>
     </div>
+    
 
   </head>
   <body>
@@ -404,5 +368,8 @@
       </div>
     </div>
     <br>
+
+    <script src="../scripts/singup_front.js"></script>
+
   </body>
 </html>

@@ -57,7 +57,3 @@ async function findProduct(query, sortOrder = 'asc') {
 
 exports.getProducts = getProducts;
 exports.getProductById = getProductById;
-exports.createProduct = createProduct;
-exports.updateProduct = updateProduct;
-exports.deleteProduct = deleteProduct;
-exports.findProduct = findProduct;
