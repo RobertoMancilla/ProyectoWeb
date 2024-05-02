@@ -177,6 +177,13 @@
                                     <input type="text" class="form-control" placeholder="Id Product" name="Id"/>
                                 </div>
                             </div>
+                            <!-- Image -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-image" style="color: #464646"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Product image" name="Imagee" type="image"/>
+                            </div>
                             <!-- Price -->
                             <div class="input-group mb-3">
                                 <span class="input-group-text">
@@ -190,6 +197,13 @@
                                     <i class="fa-solid fa-file" style="color: #464646"></i>
                                 </span>
                                 <input type="Descript" class="form-control" placeholder="Description" name="Descrip"/>
+                            </div>
+                            <!-- Category -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-list" style="color: #464646"></i>
+                                </span>
+                                <input type="Catego" class="form-control" placeholder="Category" name="categ"/>
                             </div>
                             <!-- Stock -->
                             <div class="input-group mb-3">
@@ -215,6 +229,81 @@
                     </div>
                     <div class="modal-footer">
                         <button id="submitProductBtn" type="button" class="btn btn-success" data-bs-dismiss="modal">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- The Modal Edit Products -->
+        <div class="modal" id="addCartShopping">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitleId">EDIT PRODUCT</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <!-- Nombre e Id en la misma fila -->
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <input type="text" class="form-control" placeholder="Product Name" name="updateName"/>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" placeholder="Id Product" name="updateId"/>
+                                </div>
+                            </div>
+                            <!-- Image -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-image" style="color: #464646"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Product image" name="updateImagee" type="image"/>
+                            </div>
+                            <!-- Price -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-dollar-sign" style="color: #464646"></i>
+                                </span>
+                                <input type="price" class="form-control" placeholder="Product Price" name="updatePrice" type="price"/>
+                            </div>
+                            <!-- Description -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-file" style="color: #464646"></i>
+                                </span>
+                                <input type="Descript" class="form-control" placeholder="Description" name="updateDescrip"/>
+                            </div>
+                            <!-- Category -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-list" style="color: #464646"></i>
+                                </span>
+                                <input type="Catego" class="form-control" placeholder="Category" name="updateCateg"/>
+                            </div>
+                            <!-- Stock -->
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-plus" style="color: #464646"></i>
+                                </span>
+                                <input type="stock" class="form-control" placeholder="Stock" name="updateStock"/>
+                            </div>
+                            
+                            <!-- Sizes -->
+                            <div>
+                                <h3 class="text-center">Sizes</h3>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <input type="checkbox" id="size-S" name="size" value="S">
+                                    <label for="sizeS" class="mx-1"> S</label>
+                                    <input type="checkbox" id="size-M" name="size" value="M" class="mx-2">
+                                    <label for="sizeM" class="mx-1"> M</label>
+                                    <input type="checkbox" id="size-G" name="size" value="G" class="mx-2">
+                                    <label for="sizeG" class="mx-1"> G</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="updateProductBtn" type="button" class="btn btn-success" data-bs-dismiss="modal">UPDATE</button>
                     </div>
                 </div>
             </div>
@@ -284,73 +373,7 @@
         </div><br>
 
         <!-- CURRENT PRODUCTS -->
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                  <div class="media border p-3 cart-product">
-                      <div class="image-container">
-                        <img src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812638_400.jpg" alt="imagen_produco" class="mr-3 mt-3"/>
-                      </div>
-                    <div class="media-body">
-                        <h4>23 University Grey</h4>
-                        <!-- Aqui van los inputs -->
-                        <div>
-                          COLOR: Grey
-                        </div>
-                        <div>
-                          SIZE: S
-                        </div>
-                        <div>
-                          QUANTITY: 1
-                        </div>
-                        <br>
-                        <div class="trash-icon-container">
-                            <i class="fa-solid fa-pen"></i>
-                            <a href="#" class="trash-icon">
-                                <span class="material-symbols-outlined">
-                                delete
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product-price">
-                      <h4>$400</h4>
-                    </div>
-                  </div>
-                  <div class="media border p-3 cart-product">
-                      <div class="image-container">
-                        <img src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812638_400.jpg" alt="imagen_produco" class="mr-3 mt-3"/>
-                      </div>
-                    <div class="media-body">
-                        <h4>
-                          23 University Grey
-                        </h4>
-                        <!-- Aqui van los inputs -->
-                        <div>
-                          COLOR: Grey
-                        </div>
-                        <div>
-                          SIZE: S
-                        </div>
-                        <div>
-                          QUANTITY: 1
-                        </div>
-                        <br>
-                        <div class="trash-icon-container">
-                            <i class="fa-solid fa-pen"></i>
-                            <a href="#" class="trash-icon">
-                                <span class="material-symbols-outlined">
-                                delete
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="product-price">
-                      <h4>$400</h4>
-                    </div>
-                  </div>
-                </div>
-            </div>
+        <div class="products_container">
         </div>
         <script src="../controllers/admin.js"></script>
     </body>
