@@ -1,15 +1,14 @@
 const express = require('express');
 const path = require('node:path');
 const router = require('./app/controllers/router');
-const mongoose = require('./app/data/bd_connection');
-const mongoConnection = require('./app/data/bd_connection');
 const connectToDatabase = require('./app/data/bd_connection');
 
 const app = express();
 const port = 3000;
 
-app.use(express.static('app'));
-app.use(express.static(path.join(__dirname, './app/views')));
+app.use(express.static(path.join(__dirname, 'app/public')));
+
+app.set('views', path.join(__dirname, 'app/views'));
 
 //middleware
 app.use(router);
