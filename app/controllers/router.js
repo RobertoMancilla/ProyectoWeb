@@ -5,12 +5,13 @@ const adminProductRouter = require('../routes/Admin_routes.js');
 
 const router = express.Router();
 
-router.get('/', (req, res) => res.sendFile(path.resolve(__dirname + '/../views/home.html')));
-router.get('/home', (req, res) => res.sendFile(path.resolve(__dirname + "/../views/home.html")));
-router.get('/shopping_cart', (req, res) => res.sendFile(path.resolve(__dirname + "/../views/shopping_cart.html")));
+router.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../views/home.html')));
+router.get('/home', (req, res) => res.sendFile(path.resolve(__dirname, '../views/home.html')));
+router.get('/shopping_cart', (req, res) => res.sendFile(path.resolve(__dirname, '../views/shopping_cart.html')));
+router.get('/one_product', (req, res) => res.sendFile(path.resolve(__dirname, '../views/one_product.html')));
 
 //products
-router.use('/products', productRouter);
+router.use('/api', productRouter);
 
 //añadir 
 router.use('/admin', adminProductRouter);

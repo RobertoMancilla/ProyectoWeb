@@ -14,6 +14,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    imageUrl2: {
+        type: String,
+        required: true
+    },
+    imageUrl3: {
+        type: String,
+        required: true
+    },
     price: {
         type: Number,
         required: true
@@ -30,6 +38,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    gender: [String],
     sizes: [String]
 });
 

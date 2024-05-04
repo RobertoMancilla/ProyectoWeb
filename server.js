@@ -9,7 +9,7 @@ app.use('/views', express.static('views'));
 app.use(router);
 
 const mongoConnection = "mongodb+srv://admin:Ago21@myapp.niayuxp.mongodb.net/MyAppDB";
-mongoose.connect(mongoConnection, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoConnection);
 
 app.use(express.json());
 

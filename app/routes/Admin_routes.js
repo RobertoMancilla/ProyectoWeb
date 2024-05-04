@@ -53,8 +53,6 @@ router.post('/actualizar-producto', async (req, res) => {
         const updatedProductData = req.body;
         const productId = updatedProductData.productId;
 
-        console.log("Valor de la categoría recibido:", updatedProductData.category);
-
         const product = await Product.findOne({ productId: productId });
 
         if (!product) {
@@ -62,10 +60,13 @@ router.post('/actualizar-producto', async (req, res) => {
         }
         product.productName = updatedProductData.productName;
         product.imageUrl = updatedProductData.imageUrl;
+        product.imageUrl2 = updatedProductData.imageUrl2;
+        product.imageUrl3 = updatedProductData.imageUrl3;
         product.price = updatedProductData.price;
         product.description = updatedProductData.description;
         product.stock = updatedProductData.stock;
         product.category = updatedProductData.category;
+        product.gender = updatedProductData.gender;
         product.sizes = updatedProductData.sizes;
 
         await product.save();
