@@ -9,7 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 var productos = JSON.parse(xhr.responseText);
+                // Declarar las variables fuera del bucle
                 productos.forEach(function(producto) {
+                    // Obtener la URL de la imagen 2 y la imagen 3
                     // Crear la tarjeta de producto en formato HTML
                     const productCardHTML = `
                         <div class="media border p-3 cart-product">
@@ -32,6 +34,9 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                                 <div>
                                     Stock: ${producto.stock}
+                                </div>
+                                <div>
+                                    Gender: ${producto.gender.join(", ")}
                                 </div>
                                 <div>
                                     Sizes: ${producto.sizes.join(", ")}
@@ -57,7 +62,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     button.addEventListener("click", function() {
                         var productName = this.closest(".media-body").querySelector("h4").innerText;
                         var productId = this.dataset.productId;
+                        var producto = productos.find(prod => prod.productId === productId);
 
+                        // Obtener los valores de imageUrl2 e imageUrl3 del producto específico
+                        var imageUrl2 = producto.imageUrl2;
+                        var imageUrl3 = producto.imageUrl3;
                         // Seleccionar el input del productId y deshabilitarlo
                         var productIdInput = document.querySelector('input[name="updateId"]');
                         productIdInput.value = productId;
@@ -69,8 +78,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         var productPriceElement = this.closest(".media-body").querySelectorAll("div")[1];
                         var productCategoryElement = this.closest(".media-body").querySelectorAll("div")[3];
                         var productStockElement = this.closest(".media-body").querySelectorAll("div")[4];
-                        var productSizesElement = this.closest(".media-body").querySelectorAll("div")[5];
-                        
+                        var productGenderElement = this.closest(".media-body").querySelectorAll("div")[5];
+                        var productSizesElement = this.closest(".media-body").querySelectorAll("div")[6];
 
                         // Obtener solo el valor de cada elemento
                         var productDescription = productDescriptionElement.innerText.split(": ")[1];
@@ -78,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         var productStock = productStockElement.innerText.split(": ")[1];
                         var productCategory = productCategoryElement.innerText.split(": ")[1];
                         var productImageUrl = productImageUrlElement.getAttribute("src");
+                        var productGender = productGenderElement.innerText.split(": ")[1].split(", ");
                         var productSizes = productSizesElement.innerText.split(": ")[1].split(", ");
 
                         // Llenar el formulario del modal con los datos del producto seleccionado
@@ -88,8 +98,21 @@ document.addEventListener("DOMContentLoaded", function() {
                         document.querySelector('input[name="updateStock"]').value = productStock;
                         document.querySelector('input[name="updateCateg"]').value = productCategory;
                         document.querySelector('input[name="updateImagee"]').value = productImageUrl;
+                        
+                        // Asignar las URLs de las imágenes 2 y 3 al formulario del modal
+                        document.querySelector('input[name="updateImagee2"]').value = imageUrl2;
+                        document.querySelector('input[name="updateImagee3"]').value = imageUrl3;
 
                         // Marcar los tamaños seleccionados en el formulario del modal
+                        var checkboxes = document.querySelectorAll("#addCartShopping input[name='gender']");
+                        checkboxes.forEach(function(checkbox) {
+                            if (productGender.includes(checkbox.value)) {
+                                checkbox.checked = true;
+                            } else {
+                                checkbox.checked = false;
+                            }
+                        });
+
                         var checkboxes = document.querySelectorAll("#addCartShopping input[name='size']");
                         checkboxes.forEach(function(checkbox) {
                             if (productSizes.includes(checkbox.value)) {
@@ -121,10 +144,18 @@ document.addEventListener("DOMContentLoaded", function() {
         var productName = document.querySelector("#myModal input[name='PName']").value;
         var productId = document.querySelector("#myModal input[name='Id']").value;
         var imageUrl = document.querySelector("#myModal input[name='Imagee']").value;
+        var imageUrl2 = document.querySelector("#myModal input[name='Imagee2']").value;
+        var imageUrl3 = document.querySelector("#myModal input[name='Imagee3']").value;
         var price = document.querySelector("#myModal input[name='Price']").value;
         var description = document.querySelector("#myModal input[name='Descrip']").value;
         var stock = document.querySelector("#myModal input[name='confirmStock']").value;
         var category = document.querySelector("#myModal input[name='categ']").value
+
+        var gender = [];
+        var checkboxes = document.querySelectorAll("#myModal input[name='gender']:checked");
+        checkboxes.forEach(function(checkbox) {
+            gender.push(checkbox.value);
+        });
 
         var sizes = [];
         var checkboxes = document.querySelectorAll("#myModal input[name='size']:checked");
@@ -136,10 +167,13 @@ document.addEventListener("DOMContentLoaded", function() {
             productName: productName,
             productId: productId,
             imageUrl: imageUrl,
+            imageUrl2: imageUrl2,
+            imageUrl3: imageUrl3,
             price: price,
             description: description,
             stock: stock,
             category: category,
+            gender: gender,
             sizes: sizes
         };
         console.log(productData);
@@ -154,6 +188,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     document.querySelector("#myModal input[name='PName']").value = "";
                     document.querySelector("#myModal input[name='Id']").value = "";
                     document.querySelector("#myModal input[name='Imagee']").value = "";
+                    document.querySelector("#myModal input[name='Imagee2']").value = "";
+                    document.querySelector("#myModal input[name='Imagee3']").value = "";
                     document.querySelector("#myModal input[name='Price']").value = "";
                     document.querySelector("#myModal input[name='Descrip']").value = "";
                     document.querySelector("#myModal input[name='confirmStock']").value = "";
@@ -177,6 +213,8 @@ document.getElementById("updateProductBtn").addEventListener("click", function()
     var updatedProductName = document.querySelector('input[name="updateName"]').value;
     var updatedProductId = document.querySelector('input[name="updateId"]').value;
     var updatedImageUrl = document.querySelector('input[name="updateImagee"]').value;
+    var updatedImageUrl2 = document.querySelector('input[name="updateImagee2"]').value;
+    var updatedImageUrl3 = document.querySelector('input[name="updateImagee3"]').value;
     var updatedPrice = document.querySelector('input[name="updatePrice"]').value;
     var updatedDescription = document.querySelector('input[name="updateDescrip"]').value;
     var updatedStock = document.querySelector('input[name="updateStock"]').value;
@@ -185,11 +223,20 @@ document.getElementById("updateProductBtn").addEventListener("click", function()
     console.log("Updated Product Name:", updatedProductName);
     console.log("Updated Product ID:", updatedProductId);
     console.log("Updated Image URL:", updatedImageUrl);
+    console.log("Updated Image URL2:", updatedImageUrl2);
+    console.log("Updated Image URL3:", updatedImageUrl3);
     console.log("Updated Price:", updatedPrice);
     console.log("Updated Description:", updatedDescription);
     console.log("Updated Stock:", updatedStock);
     console.log("Updated Category:", updatedCategory);
 
+    var updatedGender = [];
+    var updatedCheckboxes = document.querySelectorAll("#addCartShopping input[name='gender']:checked");
+    updatedCheckboxes.forEach(function(checkbox) {
+        updatedGender.push(checkbox.value);
+    });
+
+    console.log("Updated gender:", updatedGender);
     var updatedSizes = [];
     var updatedCheckboxes = document.querySelectorAll("#addCartShopping input[name='size']:checked");
     updatedCheckboxes.forEach(function(checkbox) {
@@ -201,10 +248,13 @@ document.getElementById("updateProductBtn").addEventListener("click", function()
         productName: updatedProductName,
         productId: updatedProductId,
         imageUrl: updatedImageUrl,
+        imageUrl2: updatedImageUrl2,
+        imageUrl3: updatedImageUrl3,
         price: updatedPrice,
         description: updatedDescription,
         stock: updatedStock,
         category: updatedCategory,
+        gender: updatedGender,
         sizes: updatedSizes
     };
 

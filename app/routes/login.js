@@ -1,16 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
 
 const User = require('../data/schema_model_users'); 
 
 const router = express.Router();
 
-router.use(bodyParser.json());
-router.use(cookieParser());
+router.use(express.json());
 
 const validateLoginInput = (req, res, next) => {
     const { email, password } = req.body;
@@ -20,7 +16,7 @@ const validateLoginInput = (req, res, next) => {
     next();
 };
 
-router.post('/', validateLoginInput, async (req, res) => {
+router.post('/login', validateLoginInput, async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
@@ -35,12 +31,24 @@ router.post('/', validateLoginInput, async (req, res) => {
         }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'el_tieso', { expiresIn: '1d' });
-
-        res.cookie('token', token, { httpOnly: true, maxAge: 86400000 }); // 1 day
-        res.json({ message: 'Logged in successfully' });
+        res.json({ message: 'Logged in successfully', token }); // Devuelve el token en la respuesta
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
     }
+});
+
+router.post('/validate-token', (req, res) => {
+    const { token } = req.body;  // Asumir que el token viene en el cuerpo de la solicitud
+    if (!token) {
+        return res.status(401).json({ message: 'No token provided' });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET || 'el_tieso', (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: 'Invalid token' });
+        }
+        res.json({ message: 'Token is valid', userId: decoded.id });
+    });
 });
 
 module.exports = router;

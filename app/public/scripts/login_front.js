@@ -1,67 +1,55 @@
 document.addEventListener("DOMContentLoaded", function() {
     const loginForm = document.getElementById('loginForm');
+    const logInTextElement = document.getElementById('log_in');
+
+    // Verifica si el usuario ya está logueado
+    checkUserLogin();
+
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
 
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
 
-        console.log("emial:",email);
-        console.log("password:", password);
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.sToken) {
+                // Guarda el token en localStorage o maneja como creas conveniente
+                localStorage.setItem('jwt', data.sToken);
+                // Cambiar el texto de inicio de sesión a "Mi Cuenta"
+                logInTextElement.innerText = 'My Account';
+                alert('Inicio de sesión exitoso!');
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost:3000/login', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.onload = function() {
-            const response = JSON.parse(xhr.responseText);
-            if (xhr.status >= 200 && xhr.status < 300) {
-                // Cerrar el modal de inicio de sesión
-                const modal = bootstrap.Modal.getInstance(document.getElementById('myModalLogIn'));
+                var myModalEl = document.getElementById('myModalLogIn');
+                var modal = bootstrap.Modal.getInstance(myModalEl);
                 modal.hide();
 
-                // Mostrar mensaje de éxito
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login Successful',
-                    text: 'You are now logged in!',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-
-                // Actualizar el UI para mostrar "Profile" en lugar de "Log in"
-                const loginLink = document.getElementById('log_in');
-                loginLink.textContent = 'Profile';
-                loginLink.href = '/profile';
-                loginLink.removeAttribute('data-bs-toggle');
-                loginLink.removeAttribute('data-bs-target');
-            } else if (xhr.status === 404) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Failed',
-                    text: 'User not found. Please check your email.',
-                    confirmButtonColor: '#FF6347'
-                });
-            } else if (xhr.status === 401) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Failed',
-                    text: 'Invalid password. Please try again.',
-                    confirmButtonColor: '#FF6347'
-                });
+                console.log("Token from localStorage:", localStorage.getItem('jwt'));
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Failed',
-                    text: response.message || 'Something went wrong. Please try again later.',
-                    confirmButtonColor: '#FF6347'
-                });
+                throw new Error(data.authError || 'Error desconocido al iniciar sesión');
             }
-        };
-        const data = JSON.stringify({ email, password });
-
-        console.log("data:",data);
-
-        xhr.send(data);
+        })
+        .catch(error => {
+            alert('Error al iniciar sesión: ' + error.message);
+        });
     });
+
+    function checkUserLogin() {
+        if (localStorage.getItem('jwt')) {
+            // Si el token existe, cambia el texto del elemento
+            logInTextElement.innerText = 'My Account';
+        } else {
+            logInTextElement.innerText = 'Profile';   
+        }
+    }
 });
