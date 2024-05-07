@@ -116,12 +116,12 @@ function mostrarDetallesProducto(producto) {
 function generarBotonesTallas(sizes) {
     let buttonsHTML = '';
     const availableSizes = sizes || []; // Si no hay tallas disponibles, usar un array vacío
-    const validSizes = ['S', 'M', 'G']; // Tallas válidas
+    const validSizes = ['S', 'M', 'L']; // Asegúrate de que estos valores coinciden con tus tallas válidas
     validSizes.forEach(size => {
         const isAvailable = availableSizes.includes(size);
-        const buttonClass = isAvailable ? 'size-btn' : 'size-btn unavailable';
-        const buttonStyle = isAvailable ? '' : 'style="text-decoration: line-through"';
-        buttonsHTML += `<button class="${buttonClass}" ${buttonStyle}>${size}</button>`;
+        const buttonClass = 'size-btn' + (isAvailable ? '' : ' unavailable');
+        const buttonAttributes = isAvailable ? `class="${buttonClass}"` : `class="${buttonClass}" disabled style="cursor: default; text-decoration: line-through; pointer-events: none;"`;
+        buttonsHTML += `<button ${buttonAttributes}>${size}</button>`;
     });
     return buttonsHTML;
 }

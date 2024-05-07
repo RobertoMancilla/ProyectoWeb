@@ -18,7 +18,7 @@ router.get('/productosAPI', async (req, res) => {
 // Ruta para obtener los detalles de un producto por su ID para One_product
 router.get('/oneProducto/:productId', async (req, res) => {
     const productId = req.params.productId;
-    console.log("product id", productId);
+    // console.log("product id", productId);
     try {
         // Buscar por el campo productId que has definido
         const producto = await Product.findById(productId);

@@ -6,14 +6,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function loadCartProducts(userId) {
-    //obtener carrito
+async function loadCartProducts(userId) {
+    try {
+        const response = await fetch(`/cart/${userId}`);
+        const cart = await response.json();
+        displayShoppingBagTitle(cart);
+        displayCartItems(cart);
+        displayOrderSummary(cart);
+    } catch (error) {
+        console.error('Error loading cart:', error);
+    }
 }
 
+function displayShoppingBagTitle(cart) {
+    const titleContainer = document.getElementById('titleShoppingBag');
+    if (!titleContainer) return;
+
+    let totalItems = 0;
+    if (cart && cart.items) {
+        totalItems = cart.items.reduce((total, item) => total + item.quantity, 0);
+    }
+
+    // Genera el título basado en el número de ítems
+    const titleText = `Your Shopping Bag (${totalItems} Item${totalItems === 1 ? '' : 's'})`;
+    titleContainer.innerHTML = `<h3 class="text">${titleText}</h3>`;
+}
+
+
 function displayCartItems(cart) {
+    console.log("cart:", cart);
     const container = document.querySelector('.container .row .col');
-    // console.log("cart:", cart.items);
-    console.log("item lenght:", cart.items.length); 
     if (cart.items.length === 0) {
         container.innerHTML = '<p>Your cart is empty</p>';
         return;
@@ -24,13 +46,12 @@ function displayCartItems(cart) {
         cardInCartHtml += `
             <div class="media border p-3 cart-product">
                 <div class="image-container">
-                    <img src="${item.productoId.imageUrl}" alt="Product Image" class="mr-3 mt-3" />
+                    <img src="${item.productId.imageUrl}" alt="Product Image" class="mr-3 mt-3" />
                 </div>
                 <div class="media-body">
-                    <h4>${item.productoId.title}</h4>
-                    <div>COLOR: ${item.productoId.color}</div>
+                    <h4>${item.productId.productName}</h4>
                     <div>SIZE: ${item.size}</div>
-                    <div>QUANTITY: ${item.cantidad}</div>
+                    <div>QUANTITY: ${item.quantity}</div>
                     <br>
                     <div><a class="edit" href="#">Edit</a></div>
                     <div class="trash-icon-container">
@@ -39,7 +60,7 @@ function displayCartItems(cart) {
                         </a>
                     </div>
                 </div>
-                <div class="product-price"><h4>$${item.productoId.price}</h4></div>
+                <div class="product-price"><h4>$${item.productId.price}</h4></div>
             </div>
         `;
     });
@@ -48,15 +69,15 @@ function displayCartItems(cart) {
 
 function displayOrderSummary(cart) {
     const summaryContainer = document.querySelector('.container .row .col-lg-4 .media-body');
-    let subtotal = cart.items.reduce((total, item) => total + (item.productoId.price * item.cantidad), 0);
-    let shipping = subtotal > 0 ? 60 : 0; // Example shipping cost logic
+    let subtotal = 0;
+    if (cart && cart.items) {
+        subtotal = cart.items.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
+    }
+    console.log("subtotal:", subtotal);
+    let shipping = subtotal > 0 ? 60 : 0; // shipping cost logic (inventada)
     let total = subtotal + shipping;
 
     const summaryHtml = `
-        <br>
-        <br>
-        <br>
-
         <h4>YOUR ORDER SUMMARY</h4>
         <div class="price-line">
             <span>Subtotal:</span>
@@ -72,8 +93,4 @@ function displayOrderSummary(cart) {
         </div>
     `;
     summaryContainer.innerHTML = summaryHtml;
-}
-
-function removeFromCart(productId) {
-    // Implement the function to handle removing an item from the cart
 }

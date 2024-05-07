@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const cartController = require('../controllers/cart_controller');  
 const Cart = require('../data/schema_cart');
 
 
@@ -51,13 +50,28 @@ router.post('/add-item', (req, res) => {
         });
 });
 
-
+// Obtener el carrito de un usuario
 // Obtener el carrito de un usuario
 router.get('/:userId', (req, res) => {
-   
+    Cart.findOne({ userId: req.params.userId })
+        .populate('items.productId')  // Asumiendo que 'items.productoId' es una referencia a un modelo de Producto
+        .then(cart => {
+            if (cart) {
+                res.status(200).json(cart);
+            } else {
+                res.status(404).send('Carrito no encontrado');
+            }
+        })
+        .catch(error => {
+            console.error('Error al recuperar el carrito:', error);
+            res.status(500).send('Error al recuperar el carrito');
+        });
 });
 
+
 // Eliminar un producto del carrito
-router.post('/remove', cartController.removeItem);
+router.post('/remove', (req, res) => {
+
+});
 
 module.exports = router;

@@ -142,4 +142,14 @@ padding-right: 0 !important;
     border-bottom: 2px solid black; /* La pestaña activa tiene una línea subrayada */
 }
 
+.size-btn.unavailable {
+    cursor: default;
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+.size-btn.selected-size {
+    background-color: #E2DCC9; /* Color verde para indicar selección */
+    color: black; /* Texto blanco para mayor contraste */
+}
   
