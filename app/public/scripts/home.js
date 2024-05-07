@@ -47,7 +47,7 @@ function generarContenedoresDeCategorias(productosPorCategoria) {
             `;
             productosDeLaCategoria.forEach(function(producto, index) {
                 // Construir la URL con el ID del producto
-                const productURL = `one_product?id=${producto.productId}`;
+                const productURL = `one_product?id=${producto._id}`;
                 
                 // Crear la tarjeta de producto en formato HTML con el enlace
                 const productCardHTML = `

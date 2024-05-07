@@ -34,6 +34,7 @@ router.delete('/delete/:productId', async (req, res) => {
 
 router.post('/guardar-producto', (req, res) => {
     console.log("post");
+    
     const newProduct = new Product(req.body);   
     console.log("body:", req.body);
 

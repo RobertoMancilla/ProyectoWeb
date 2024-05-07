@@ -3,10 +3,9 @@ const path = require('path');
 
 const productRouter = require('../routes/products_routes.js');
 const adminProductRouter = require('../routes/Admin_routes.js');
-const authenticate = require('../middleware/tokens.js');
+const cartRouter = require('../routes/cart_routes.js');
 
 const auth = require('../controllers/auth-controllers.js')
-
 
 const router = express.Router();
 
@@ -17,6 +16,9 @@ router.get('/one_product', (req, res) => res.sendFile(path.join(__dirname, '../v
 
 //products
 router.use('/api', productRouter);
+
+//cart
+router.use('/cart', cartRouter);
 
 //sign up
 router.post('/signup', auth.registerUser);

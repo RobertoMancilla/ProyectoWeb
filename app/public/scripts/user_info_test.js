@@ -8,6 +8,5 @@ document.addEventListener("DOMContentLoaded", function() {
             userInfo.innerText = `User ID: ${decoded.id}`;
         }
     }
-
     displayUserInfo();
 });

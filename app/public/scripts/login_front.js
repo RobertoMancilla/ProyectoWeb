@@ -21,35 +21,45 @@ document.addEventListener("DOMContentLoaded", function() {
                 password: password
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.sToken) {
-                // Guarda el token en localStorage o maneja como creas conveniente
-                localStorage.setItem('jwt', data.sToken);
-                // Cambiar el texto de inicio de sesión a "Mi Cuenta"
+        .then(response => response.json().then(data => ({
+            status: response.status,
+            data
+        })))
+        .then(result => {
+            if (result.status === 200) {
+                localStorage.setItem('jwt', result.data.sToken);
                 logInTextElement.innerText = 'My Account';
-                alert('Inicio de sesión exitoso!');
 
                 var myModalEl = document.getElementById('myModalLogIn');
                 var modal = bootstrap.Modal.getInstance(myModalEl);
                 modal.hide();
 
-                console.log("Token from localStorage:", localStorage.getItem('jwt'));
+                Swal.fire({
+                    icon: "success",
+                    title: "Login Successful",
+                    text: "You have logged in successfully!",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
             } else {
-                throw new Error(data.authError || 'Error desconocido al iniciar sesión');
+                throw result.data;
             }
         })
         .catch(error => {
-            alert('Error al iniciar sesión: ' + error.message);
+            Swal.fire({
+                icon: "error",
+                title: "Login Failed",
+                text: error.authError || 'An unknown error occurred during login.',
+                showConfirmButton: true
+            });
         });
     });
 
     function checkUserLogin() {
         if (localStorage.getItem('jwt')) {
-            // Si el token existe, cambia el texto del elemento
             logInTextElement.innerText = 'My Account';
         } else {
-            logInTextElement.innerText = 'Profile';   
+            logInTextElement.innerText = 'Log In';   
         }
     }
 });

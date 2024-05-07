@@ -18,8 +18,10 @@ router.get('/productosAPI', async (req, res) => {
 // Ruta para obtener los detalles de un producto por su ID para One_product
 router.get('/oneProducto/:productId', async (req, res) => {
     const productId = req.params.productId;
+    console.log("product id", productId);
     try {
-        const producto = await Product.findOne({ productId: productId }); // Buscar por productId en lugar de _id
+        // Buscar por el campo productId que has definido
+        const producto = await Product.findById(productId);
         if (!producto) {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
@@ -29,5 +31,6 @@ router.get('/oneProducto/:productId', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener los detalles del producto' });
     }
 });
+
 
 module.exports = router;

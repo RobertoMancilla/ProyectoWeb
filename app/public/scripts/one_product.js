@@ -1,34 +1,37 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Obtener el ID del producto de la URL
+
+document.addEventListener('DOMContentLoaded', function() {
+    cargarDetallesProducto();
+    
+});
+
+async function cargarDetallesProducto() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
-    // Realizar la solicitud GET para obtener los detalles del producto
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", `/api/oneProducto/${productId}`, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                // Convertir la respuesta JSON en un objeto JavaScript
-                const producto = JSON.parse(xhr.responseText);
-                // Actualizar el contenido de la página con los detalles del producto
-                mostrarDetallesProducto(producto);
-            } else {
-                console.error("Error al obtener los detalles del producto:", xhr.status);
-            }
+    try {
+        const response = await fetch(`/api/oneProducto/${productId}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener los detalles del producto');
         }
-    };
-    xhr.send();
-});
+        const producto = await response.json();
+        mostrarDetallesProducto(producto);
+    } catch (error) {
+        console.error("Error al obtener los detalles del producto:", error.message);
+    }
+}
 
 function mostrarDetallesProducto(producto) {
-    // Seleccionar el contenedor donde se mostrarán los detalles del producto
-    const productContainer = document.querySelector('.containerProduct.custom-container');
+    const productContainer = document.querySelector('.container.custom-container');
+    if (!productContainer) {
+        console.error('El contenedor del producto no existe');
+        return;
+    }
 
     // Crear elementos HTML para mostrar los detalles del producto
     const productRow = document.createElement('div');
+
     productRow.classList.add('row');
-    
+
     // Primera columna para la primera imagen
     const productImageDiv1 = document.createElement('div');
     productImageDiv1.classList.add('col-md-4');
@@ -77,7 +80,7 @@ function mostrarDetallesProducto(producto) {
                 </div>
             </div>
             <div class="product-actions">
-                <button id="btn1card" type="button" class="btn btn-dark btn-add-to-bag">ADD TO BAG</button>
+                <button id="btnAddToBag" type="button" class="btn btn-dark btn-add-to-bag">ADD TO BAG</button>
                 <button class="btn btn-outline-dark btn-favorite">
                     <span class="material-symbols-outlined">favorite</span>
                 </button>
@@ -87,6 +90,7 @@ function mostrarDetallesProducto(producto) {
 
     // Agregar elementos al contenedor
     productContainer.appendChild(productRow);
+
     productRow.appendChild(productImageDiv1);
     productRow.appendChild(productImageDiv2);
     productRow.appendChild(productInfoDiv);

@@ -42,6 +42,14 @@ const productSchema = new mongoose.Schema({
     sizes: [String]
 });
 
+
+productSchema.statics.findById =  async function(id) {
+    const product = await this.findOne({
+        _id: {$eq:id}
+    })
+    return product;
+  };
+
 const Product = mongoose.model('products', productSchema);
 // const Product = mongoose.model('productsProyects', productSchema);
 

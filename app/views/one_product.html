@@ -23,72 +23,33 @@
     
     <!-- MODALES  -->
     <!-- Modal log in -->
-    <div
-      class="modal fade"
-      id="myModal1"
-      tabindex="-1"
-      data-bs-backdrop="true"
-      data-bs-keyboard="true"
-      role="dialog"
-      aria-labelledby="modalTitleId"
-      aria-hidden="true"
-    >
-      <!-- Para cambiar el tamaño modal-lg a modal-sm -->
-      <div
-        class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
-        role="document"
-      >
+    <div class="modal fade" id="myModalLogIn" tabindex="-1" data-bs-backdrop="true" data-bs-keyboard="true" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalTitleId">Log in</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="#" style="margin: 8px 8px">
+            <form id="loginForm" style="margin: 8px 8px">
               Email:
-              <!-- inputs mail y password -->
               <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Your Email"
-                  name="email"
-                  required
-                />
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-envelope" style="color: #464646"></i
-                ></span>
+                <input type="email" class="form-control" placeholder="Your Email" id="loginEmail" name="email" required>
+                <span class="input-group-text"><i class="fa-solid fa-envelope" style="color: #464646"></i></span>
               </div>
               Password:
               <div class="input-group mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Your Password"
-                  required
-                />
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-key" style="color: #464646"></i
-                ></span>
+                <input type="password" class="form-control" placeholder="Your Password" id="loginPassword" required>
+                <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
               </div>
-              <!--  -->
               <div class="form-check mb-3">
                 <label class="form-check-label">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="remember"
-                  />
+                  <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
                   Remember me
                 </label>
               </div>
               <div id="btn_submit_modal">
-                <button type="submit" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
+              <button type="submit" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
               </div>
             </form>
           </div>
@@ -109,80 +70,43 @@
     </div>
 
     <!-- Modal sign up-->
-    <div
-      class="modal fade"
-      id="myModalSignUp"
-      tabindex="-1"
-      aria-labelledby="modalTitleId"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="myModalSignUp" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modalTitleId">Sign Up</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="signupForm">
               <!-- Nombre y apellidos en la misma fila -->
               <div class="row mb-3">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Name" />
+                  <input type="text" class="form-control" placeholder="Name" id="name" />
                 </div>
                 <div class="col">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Surname"
-                  />
+                  <input type="text" class="form-control" placeholder="Surname" id="surname" />
                 </div>
               </div>
               <!-- Email -->
               <div class="input-group mb-3">
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-envelope" style="color: #464646"></i
-                ></span>
-                <input
-                  type="email"
-                  class="form-control"
-                  placeholder="Your Email"
-                  name="email"
-                  type="email"
-                />
+                <span class="input-group-text"><i class="fa-solid fa-envelope" style="color: #464646"></i></span>
+                <input type="email" class="form-control" placeholder="Your Email" id="email" />
               </div>
               <!-- Contraseña -->
               <div class="input-group mb-3">
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-key" style="color: #464646"></i
-                ></span>
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="New Password"
-                  name="psw"
-                />
+                <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
+                <input type="password" class="form-control" placeholder="New Password" id="password" />
               </div>
               <!-- Confirmar contraseña -->
               <div class="input-group mb-3">
-                <span class="input-group-text"
-                  ><i class="fa-solid fa-key" style="color: #464646"></i
-                ></span>
-                <input
-                  type="password"
-                  class="form-control"
-                  placeholder="Confirm Password"
-                  name="confirmPsw"
-                />
+                <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
+                <input type="password" class="form-control" placeholder="Confirm Password" id="confirmPassword" />
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
+            <button type="submit" form="signupForm" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
           </div>
         </div>
       </div>
@@ -248,82 +172,24 @@
     
     <!-- Images between products -->
     <!-- Image Section -->
-    <h3 class="text"></h3>
 
     <!-- cards -->
-    <div class="container custom-container">
-      <div class="row">
-        <!-- Imagenes producto  -->
-        <div class="col-md-4">
-          <div class="border p-3 cart-product">
-            <div class="image-container">
-              <img
-                src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812637_1000.jpg?c=3"
-                alt="imagen_produco"
-                class="mr-3 mt-3"
-              />
-            </div>
-          </div>
-        </div>
-        <!-- Imagenes producto -->
-        <div class="col-md-4">
-          <div class="border p-3 cart-product">
-            <div class="image-container">
-              <img
-                src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812640_1000.jpg?c=3"
-                alt="imagen_produco"
-                class="mr-3 mt-3"
-              />
-            </div>
-          </div>
-        </div>
-        <!-- Info del producto -->
-        <div class="col-md-4">
-          <div class="border p-3 card-tres">
-            <h4>23 Varsity Gray Xd</h4>
-            <h4>$399</h4>
-            <p>Descripción del producto</p>
-            <div class="sizes">
-              SIZES:
-              <div class="size-buttons">
-                <button class="size-btn">XS</button>
-                <button class="size-btn active">S</button>
-                <button class="size-btn">M</button>
-                <button class="size-btn">L</button>
-                <button class="size-btn">XL</button>
-              </div>
-            </div>
-            <div class="product-actions">
-              <button id="btn1card" type="button" class="btn btn-dark btn-add-to-bag">ADD TO BAG</button>
-              <button class="btn btn-outline-dark btn-favorite">
-                <span class="material-symbols-outlined">
-                  favorite
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>        
-      </div>
-      <!-- Mas imagenes  -->
-      <div class="row">
-        <!-- Tarjeta de producto 3 -->
-        <div class="col-md-4">
-          <div class="border p-3 cart-product">
-            <div class="image-container">
-              <img
-                src="https://cdn-images.farfetch-contents.com/off-white-23-varsity-skate-s-s-tee_21832112_51812646_1000.jpg?c=3"
-                alt="imagen_producto"
-                class="mr-3 mt-3"
-              />
-            </div>
-          </div>
-        </div>
-        <!-- Espacio vacío debajo del resumen del pedido para alinear la grilla -->
-        <div class="col-md-4">
-        </div>
-      </div>
+    <div class="container custom-container" style="margin-top: 8%;">
+      
     </div>
+
     <br>
     <br>
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="/scripts/singup_front.js"></script>
+    <script src="/scripts/login_front.js"></script>
+
+    <script src="/scripts/one_product.js"></script>
+    <script src="/scripts/cart_management.js"></script>
+
+
   </body>
 </html>
