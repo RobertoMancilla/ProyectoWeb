@@ -69,9 +69,27 @@ router.get('/:userId', (req, res) => {
 });
 
 
-// Eliminar un producto del carrito
-router.post('/remove', (req, res) => {
+router.post('/remove/:productId/:size', async (req, res) => {
+    const productId = req.params.productId;
+    const size = req.params.size;
 
+    const userId = req.body.userId; 
+
+    try {
+        // Encuentra el carrito del usuario
+        const cart = await Cart.findOne({ userId: userId });
+        if (!cart) {
+            return res.status(404).send('Cart not found.');
+        }
+        const updatedItems = cart.items.filter(item => !(item.productId.toString() === productId && item.size === size));
+        cart.items = updatedItems;
+        const updatedCart = await cart.save();
+
+        res.status(200).json(updatedCart);
+    } catch (error) {
+        console.error('Failed to remove item from cart:', error);
+        res.status(500).send('Failed to remove item from cart.');
+    }
 });
 
 module.exports = router;

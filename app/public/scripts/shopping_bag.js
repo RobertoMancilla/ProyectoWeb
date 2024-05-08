@@ -34,7 +34,7 @@ function displayShoppingBagTitle(cart) {
 
 
 function displayCartItems(cart) {
-    console.log("cart:", cart);
+    // console.log("cart:", cart);
     const container = document.querySelector('.container .row .col');
     if (cart.items.length === 0) {
         container.innerHTML = '<p>Your cart is empty</p>';
@@ -55,7 +55,7 @@ function displayCartItems(cart) {
                     <br>
                     <div><a class="edit" href="#">Edit</a></div>
                     <div class="trash-icon-container">
-                        <a href="#" class="trash-icon" onclick="removeFromCart('${item._id}')">
+                        <a href="#" class="trash-icon" onclick="removeFromCart('${item.productId._id}', '${item.size}')">
                             <span class="material-symbols-outlined">delete</span>
                         </a>
                     </div>
@@ -73,7 +73,7 @@ function displayOrderSummary(cart) {
     if (cart && cart.items) {
         subtotal = cart.items.reduce((total, item) => total + (item.quantity * item.productId.price), 0);
     }
-    console.log("subtotal:", subtotal);
+    // console.log("subtotal:", subtotal);
     let shipping = subtotal > 0 ? 60 : 0; // shipping cost logic (inventada)
     let total = subtotal + shipping;
 
@@ -94,3 +94,40 @@ function displayOrderSummary(cart) {
     `;
     summaryContainer.innerHTML = summaryHtml;
 }
+
+
+async function removeFromCart(productId, size) {
+    const token = localStorage.getItem('jwt');
+
+    console.log("Removing product:", productId, "Size:", size);
+
+    if (!token) {
+        alert('You are not authenticated. Please log in.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/cart/remove/${productId}/${size}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Asegúrate de que tu backend espera y valida este encabezado
+            },
+            body: JSON.stringify({ userId: jwt_decode(token).id }) 
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+            console.log('Item removed successfully:', data);
+            alert('Item removed successfully');
+            loadCartProducts(jwt_decode(token).id);
+        } else {
+            throw new Error(data.message || 'Failed to remove item from cart.');
+        }
+    } catch (error) {
+        console.error('Error removing item from cart:', error);
+        alert(`Error: ${error.message}`);
+    }
+}
+
