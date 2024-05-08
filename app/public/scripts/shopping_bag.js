@@ -89,7 +89,7 @@ function displayOrderSummary(cart) {
         </div>
         <h5 class="total-price">Total: <span class="value">$${total}</span></h5>
         <div class="btn-container-card">
-            <button id="btn1card" type="button" class="btn btn-dark btn-card-tres">CHECKOUT</button> <br>
+            <button id="btn1card" onclick="CheckOut()" type="button" class="btn btn-dark btn-card-tres">CHECKOUT</button> <br>
         </div>
     `;
     summaryContainer.innerHTML = summaryHtml;
@@ -131,3 +131,60 @@ async function removeFromCart(productId, size) {
     }
 }
 
+
+async function loadCartP(userId) {
+    try {
+        const response = await fetch(`/cart/${userId}`);
+        const cart = await response.json();
+        let processedCart = [];
+
+        // Uso de un Map para extraer datos y luego transformarlos en la estructura deseada
+        let newCart = new Map(Object.entries(cart.items));
+        newCart.forEach((value, key) => {
+            // Crear y añadir un arreglo al arreglo 'processedCart'
+            processedCart.push([parseInt(key), {
+                name: value.productId.productName,
+                priceInCents: value.productId.price * 100,
+                quantity:value.quantity
+            }]);
+        });
+
+        console.log("Carrito procesado: ", processedCart);
+
+        const postResponse = await fetch("/checkout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                items: processedCart // Enviando el arreglo de arreglos directamente
+            }),
+        }).then(res => {
+            if (res.ok) return res.json()
+            return res.json().then(json => Promise.reject(json))
+          })
+          .then(({ url }) => {
+            window.location = url
+          })
+          .catch(e => {
+            console.error(e.error)
+          })
+
+
+
+        const postData = await postResponse.json();
+        console.log(postData);
+
+    } catch (error) {
+        console.error('Error loading cart:', error);
+    }
+}
+
+
+
+
+
+function CheckOut() {
+    const token = localStorage.getItem('jwt');
+    loadCartP(jwt_decode(token).id)
+}
