@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 addToCart();
             } else if (event.target.classList.contains('size-btn') && !event.target.disabled) {
                 handleSizeSelection(event.target);
+            } else if (event.target.closest('.btn-favorite')) {  // Comprueba si el elemento que provocó el clic está dentro de un botón de favoritos
+                const productId = new URLSearchParams(window.location.search).get('id');
+                console.log("favorite btn");
+                addToWishlist(productId);
             }
         });
     }
@@ -79,4 +83,49 @@ function addToCart() {
             size: selectedSize
         }]
     }));
+}
+
+async function addToWishlist(productId) {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+        alert('You must be logged in to add items to your wishlist');
+        return;
+    }
+
+    try {
+        const token = localStorage.getItem('jwt');
+        let userId = null;
+
+        if (token) {
+            try {
+                const decoded = jwt_decode(token);
+                userId = decoded.id;
+            } catch (error) {
+                console.error('Error decoding JWT:', error);
+                alert('Error processing your authentication token. Please login again.');
+                return;
+            }
+        }
+
+        const response = await fetch('/new/wishlist/add-item', {  // Asegúrate de que esta URL es correcta
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({userId, productId })
+        });
+
+        console.log("user id front:", userId);
+        console.log("product id front:", productId);
+
+        if (!response.ok) {
+            throw new Error('Failed to add product to wishlist');
+        }
+
+        alert('Product added to wishlist successfully!');
+    } catch (error) {
+        console.error('Error adding product to wishlist:', error);
+        alert('Error adding product to wishlist. Please try again.');
+    }
 }

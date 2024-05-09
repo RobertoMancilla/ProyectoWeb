@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
+    var myModal = new bootstrap.Modal(document.getElementById('myModalLogIn'), {
+        keyboard: true,
+        backdrop: 'static'
+    });
+    
+    var loginButton = document.getElementById('log_in');
+    loginButton.addEventListener('click', function () {
+        myModal.show();
+    });
+
     const signupForm = document.getElementById('signupForm');
 
     function capitalizeFirstLetter(string) {

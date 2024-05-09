@@ -13,6 +13,8 @@ async function loadCartProducts(userId) {
         displayShoppingBagTitle(cart);
         displayCartItems(cart);
         displayOrderSummary(cart);
+
+        // console.log("cart:", cart);
     } catch (error) {
         console.error('Error loading cart:', error);
     }
@@ -34,7 +36,7 @@ function displayShoppingBagTitle(cart) {
 
 
 function displayCartItems(cart) {
-    // console.log("cart:", cart);
+    console.log("cart:", cart);
     const container = document.querySelector('.container .row .col');
     if (cart.items.length === 0) {
         container.innerHTML = '<p>Your cart is empty</p>';
@@ -42,7 +44,8 @@ function displayCartItems(cart) {
     }
 
     let cardInCartHtml = '';
-    cart.items.forEach((item, i) => {
+    cart.items.forEach((item) => {
+        // console.log('item:', item);
         cardInCartHtml += `
             <div class="media border p-3 cart-product">
                 <div class="image-container">
@@ -179,10 +182,6 @@ async function loadCartP(userId) {
         console.error('Error loading cart:', error);
     }
 }
-
-
-
-
 
 function CheckOut() {
     const token = localStorage.getItem('jwt');

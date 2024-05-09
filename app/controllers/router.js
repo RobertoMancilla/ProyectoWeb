@@ -4,6 +4,7 @@ const path = require('path');
 const productRouter = require('../routes/products_routes.js');
 const adminProductRouter = require('../routes/Admin_routes.js');
 const cartRouter = require('../routes/cart_routes.js');
+const wishlistRouter = require('../routes/wishlist-routes.js');
 
 const auth = require('../controllers/auth-controllers.js')
 
@@ -16,6 +17,7 @@ router.get('/', (req, res) => res.sendFile(path.join(__dirname, '../views/home.h
 router.get('/home', (req, res) => res.sendFile(path.join(__dirname, "../views/home.html")));
 router.get('/shopping_cart', (req, res) => res.sendFile(path.join(__dirname, "../views/shopping_cart.html")));
 router.get('/one_product', (req, res) => res.sendFile(path.join(__dirname, '../views/one_product.html')));
+router.get('/wishlist', (req, res) => res.sendFile(path.join(__dirname, '../views/wishlist.html')));
 router.get('/success', (req, res) => res.sendFile(path.join(__dirname, '../views/success.html')));
 router.get('/cancel', (req, res) => res.sendFile(path.join(__dirname, '../views/cancel.html')));
 
@@ -25,11 +27,17 @@ router.use('/api', productRouter);
 //cart
 router.use('/cart', cartRouter);
 
+// wishlist
+router.use('/new/wishlist', wishlistRouter);
+
+
 //sign up
 router.post('/signup', auth.registerUser);
 //log in
 router.post('/login', auth.loginUser);
-//log in
+
+
+//checkout
 router.post('/checkout', async (req, res) => {
     console.log(req.body);
 

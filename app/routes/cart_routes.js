@@ -51,7 +51,6 @@ router.post('/add-item', (req, res) => {
 });
 
 // Obtener el carrito de un usuario
-// Obtener el carrito de un usuario
 router.get('/:userId', (req, res) => {
     Cart.findOne({ userId: req.params.userId })
         .populate('items.productId')  // Asumiendo que 'items.productoId' es una referencia a un modelo de Producto
