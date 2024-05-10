@@ -20,6 +20,64 @@ async function loadCartProducts(userId) {
     }
 }
 
+function confirmSizeChange(productId, currentSize, newSize, event) {
+    console.log('Confirming size change to:', newSize);
+
+    const token = localStorage.getItem('jwt');
+    const userId = jwt_decode(token).id;
+
+    fetch(`/cart/update-item/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            userId,
+            currentSize,
+            newSize,
+            newQuantity: null
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update size.');
+        }
+        return response.json();
+    })
+    .then(updatedCart => {
+        console.log('Size updated successfully:', updatedCart);
+        loadCartProducts(userId);
+        toggleEditAndView(event.target);
+    })
+    .catch(error => {
+        console.error('Error updating size:', error);
+        alert(`Error: ${error.message}`);
+    });
+}
+
+
+function toggleEditAndView(sizeButton) {
+    const editContainer = sizeButton.closest('.edit-container');
+    const productId = sizeButton.getAttribute('data-id');
+    const currentSize = sizeButton.getAttribute('data-size');
+    const sizesJson = sizeButton.getAttribute('data-sizes');
+
+    // Recreate the edit button with event handler
+    editContainer.innerHTML = `<button id="btn_edit" class="edit-size" data-id="${productId}" data-size="${currentSize}" data-sizes='${sizesJson}'>Edit</button>`;
+    
+    // Reattach the event listener to the new edit button
+    editContainer.querySelector('.edit-size').addEventListener('click', function(event) {
+        const productId = event.target.getAttribute('data-id');
+        const currentSize = event.target.getAttribute('data-size');
+        const sizesJson = event.target.getAttribute('data-sizes');
+        const sizes = JSON.parse(sizesJson);
+    
+        showSizeOptions(event.target, productId, sizes, currentSize);
+    });
+}
+
+
 function displayShoppingBagTitle(cart) {
     const titleContainer = document.getElementById('titleShoppingBag');
     if (!titleContainer) return;
@@ -34,9 +92,7 @@ function displayShoppingBagTitle(cart) {
     titleContainer.innerHTML = `<h3 class="text">${titleText}</h3>`;
 }
 
-
 function displayCartItems(cart) {
-    console.log("cart:", cart);
     const container = document.querySelector('.container .row .col');
     if (cart.items.length === 0) {
         container.innerHTML = '<p>Your cart is empty</p>';
@@ -45,7 +101,8 @@ function displayCartItems(cart) {
 
     let cardInCartHtml = '';
     cart.items.forEach((item) => {
-        // console.log('item:', item);
+        const sizesJson = JSON.stringify(item.productId.sizes);  // Convertimos el array de tallas a una cadena JSON
+
         cardInCartHtml += `
             <div class="media border p-3 cart-product">
                 <div class="image-container">
@@ -53,10 +110,12 @@ function displayCartItems(cart) {
                 </div>
                 <div class="media-body">
                     <h4>${item.productId.productName}</h4>
-                    <div>SIZE: ${item.size}</div>
+                    <div>SIZE: <span class="item-size">${item.size}</span></div>
                     <div>QUANTITY: ${item.quantity}</div>
                     <br>
-                    <div><a class="edit" href="#">Edit</a></div>
+                    <div class="edit-container">  <!-- Contenedor para el botón de edición -->
+                        <button id="btn_edit" class="edit-size" data-id="${item.productId._id}" data-size="${item.size}" data-sizes='${JSON.stringify(item.productId.sizes)}'>Edit</button>
+                    </div>
                     <div class="trash-icon-container">
                         <a href="#" class="trash-icon" onclick="removeFromCart('${item.productId._id}', '${item.size}')">
                             <span class="material-symbols-outlined">delete</span>
@@ -67,7 +126,30 @@ function displayCartItems(cart) {
             </div>
         `;
     });
+
     container.innerHTML = cardInCartHtml;
+    
+    document.querySelectorAll('.edit-size').forEach(button => {
+        button.addEventListener('click', function(event) {
+            const productId = event.target.getAttribute('data-id');
+            const currentSize = event.target.getAttribute('data-size');
+            const sizesJson = event.target.getAttribute('data-sizes');  // Recuperamos la cadena JSON de las tallas
+            const sizes = JSON.parse(sizesJson);  // Convertimos la cadena JSON de nuevo a un array
+    
+            showSizeOptions(event.target, productId, sizes, currentSize);
+        });
+    });
+}
+
+function showSizeOptions(button, productId, sizes, currentSize) {
+    let buttonsHTML = sizes.map(size => {
+        const isSelected = size === currentSize ? 'selected-size' : '';
+        // Notice the change in the onclick attribute to pass 'event'
+        return `<button class="size-btn ${isSelected}" onclick="confirmSizeChange('${productId}', '${currentSize}', '${size}', event)">${size}</button>`;
+    }).join('');
+
+    const editContainer = button.closest('.edit-container');
+    editContainer.innerHTML = buttonsHTML;
 }
 
 function displayOrderSummary(cart) {
@@ -98,7 +180,6 @@ function displayOrderSummary(cart) {
     summaryContainer.innerHTML = summaryHtml;
 }
 
-
 async function removeFromCart(productId, size) {
     const token = localStorage.getItem('jwt');
 
@@ -123,7 +204,7 @@ async function removeFromCart(productId, size) {
         
         if (response.ok) {
             console.log('Item removed successfully:', data);
-            alert('Item removed successfully');
+            // alert('Item removed successfully');
             loadCartProducts(jwt_decode(token).id);
         } else {
             throw new Error(data.message || 'Failed to remove item from cart.');
@@ -135,6 +216,7 @@ async function removeFromCart(productId, size) {
 }
 
 
+//stripe 
 async function loadCartP(userId) {
     try {
         const response = await fetch(`/cart/${userId}`);

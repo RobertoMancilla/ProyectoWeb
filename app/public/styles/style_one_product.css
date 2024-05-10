@@ -6,8 +6,8 @@
 
 /* Eliminar los paddings internos de las columnas de Bootstrap */
 .custom-container .row > [class^='col-'] {
-padding-left: 0 !important; 
-padding-right: 0 !important; 
+    padding-left: 0 !important; 
+    padding-right: 0 !important; 
 }
 
 /* Estilos para las tarjetas de los productos */
@@ -56,7 +56,7 @@ padding-right: 0 !important;
 }
 
 .sizes {
-    margin-top: 50px; /* Ajusta según necesites */
+    margin-top: 50px; 
     font-size: 14px;
 }
   
@@ -149,7 +149,7 @@ padding-right: 0 !important;
 }
 
 .size-btn.selected-size {
-    background-color: #E2DCC9; /* Color verde para indicar selección */
-    color: black; /* Texto blanco para mayor contraste */
+    background-color: #E2DCC9; 
+    color: black; 
 }
   

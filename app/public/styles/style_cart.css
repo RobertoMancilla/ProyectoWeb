@@ -137,3 +137,43 @@
     margin-bottom: 15px;
     font-size: 26px;
 }
+
+#btn_edit {
+    background: none;       /* Elimina el fondo para que parezca un enlace normal */
+    border: none;           /* Elimina el borde del botón */
+    text-decoration: underline; /* Subraya el texto para simular un enlace */
+    cursor: pointer;        /* Cambia el cursor a un puntero para indicar que es clickeable */
+    padding: 0;             /* Elimina el relleno */
+    font-size: 16px;        /* Ajusta esto según las necesidades de tu diseño */
+}
+
+.size-btn {
+    background-color: #E7E7E7;
+    border: none;
+    margin-right: 6px; /* Espacio entre botones */
+    padding: 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.size-btn.active {
+    background-color: #232323;
+    color: #fff;
+}
+  
+.size-btn:hover {
+    background-color: #E2DCC9;
+    color: black;
+}
+
+.size-btn.unavailable {
+    cursor: default;
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+.size-btn.selected-size {
+    background-color: #E2DCC9; 
+    color: black; 
+}

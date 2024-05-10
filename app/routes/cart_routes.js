@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Cart = require('../data/schema_cart');
+const Product = require('../data/products');
 
 
 // Añadir un producto al carrito
@@ -66,6 +67,46 @@ router.get('/:userId', (req, res) => {
             res.status(500).send('Error al recuperar el carrito');
         });
 });
+
+// Actualizar la talla y/o la cantidad de un producto en el carrito
+router.post('/update-item/:productId', async (req, res) => {
+    const { productId } = req.params;
+    const { userId, newSize, newQuantity, currentSize } = req.body;
+
+    try {
+        const cart = await Cart.findOne({ userId: userId });
+        if (!cart) {
+            return res.status(404).send('Cart not found.');
+        }
+
+        const itemIndex = cart.items.findIndex(item => item.productId.toString() === productId && item.size === currentSize);
+
+        if (itemIndex > -1) {
+            const productDetails = await Product.findById(productId);
+
+            if (newSize) {
+                cart.items[itemIndex].size = newSize;
+            }
+
+            // Solo actualizamos la cantidad si `newQuantity` es un número válido y no supera el stock
+            if (newQuantity !== null && newQuantity <= productDetails.stock) {
+                cart.items[itemIndex].quantity = newQuantity;
+            } else if (newQuantity !== null) {  // Error específico para la cantidad excediendo el stock
+                return res.status(400).send(`Cannot exceed stock quantity of ${productDetails.stock}.`);
+            }
+
+            const updatedCart = await cart.save();
+            res.status(200).json(updatedCart);
+        } else {
+            res.status(404).send('Product with specified size not found in cart.');
+        }
+    } catch (error) {
+        console.error('Failed to update item in cart:', error);
+        res.status(500).send('Failed to update item in cart.');
+    }
+});
+
+
 
 
 router.post('/remove/:productId/:size', async (req, res) => {

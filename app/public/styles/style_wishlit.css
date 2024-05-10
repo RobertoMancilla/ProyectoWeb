@@ -2,12 +2,13 @@
     display: block;
     margin-top: 20px;
     /* margin: 10px auto 0; Margen automático para centrado horizontal, 10px de margen superior */
-    padding: 5px 50px;
+    padding: 3px 30px;
     font-size: 1rem;
     background-color: #aaa596; 
     color: white; 
     border: none; 
     cursor: pointer; 
+    /* height: 30px; */
     transition: background-color 0.3s ease; 
     border-radius: 3px; /* Bordes redondeados */
 }

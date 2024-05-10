@@ -1,7 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     cargarDetallesProducto();
-    
+
 });
 
 async function cargarDetallesProducto() {
