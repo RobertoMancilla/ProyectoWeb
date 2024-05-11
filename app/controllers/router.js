@@ -15,6 +15,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => res.sendFile(path.join(__dirname, '../views/home.html')));
 router.get('/home', (req, res) => res.sendFile(path.join(__dirname, "../views/home.html")));
+router.get('/products', (req, res) => res.sendFile(path.join(__dirname, "../views/products.html")));
 router.get('/shopping_cart', (req, res) => res.sendFile(path.join(__dirname, "../views/shopping_cart.html")));
 router.get('/one_product', (req, res) => res.sendFile(path.join(__dirname, '../views/one_product.html')));
 router.get('/wishlist', (req, res) => res.sendFile(path.join(__dirname, '../views/wishlist.html')));
@@ -63,7 +64,7 @@ router.post('/checkout', async (req, res) => {
             mode: "payment",
             line_items: line_items,
             success_url: `http://localhost:3000/success`,
-            cancel_url: `http://localhost:3000/cancel`,
+            cancel_url: `http://localhost:3000/shopping_cart`,
         });
 
         res.json({ url: session.url});

@@ -266,6 +266,14 @@ async function loadCartP(userId) {
 }
 
 function CheckOut() {
+    document.getElementById("checkLoader").style.display="block"
+
     const token = localStorage.getItem('jwt');
     loadCartP(jwt_decode(token).id)
+
+    var button = document.getElementById("btn1card");
+              
+        button.addEventListener("click", function() {
+          loader.style.display = "block !important";
+        });
 }
