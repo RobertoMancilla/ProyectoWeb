@@ -31,8 +31,6 @@ function confirmSizeChange(productId, currentSize, newSize, newQuantity, event) 
         newSize: newSize || currentSize,
     };
 
-    console.log("new body in update size or qty:", updateBody);
-
     if (newQuantity !== null) {
         updateBody.newQuantity = newQuantity;  // Solo añade la cantidad si realmente se ha modificado
     }
@@ -78,8 +76,9 @@ function toggleEditAndView(sizeButton) {
         const currentSize = event.target.getAttribute('data-size');
         const sizesJson = event.target.getAttribute('data-sizes');
         const sizes = JSON.parse(sizesJson);
-    
-        showSizeOptions(event.target, productId, sizes, currentSize);
+        const currentQuantity = event.target.getAttribute('data-quantity');
+
+        showSizeOptions(event.target, productId, sizes, currentSize, currentQuantity);
     });
 }
 
@@ -119,7 +118,7 @@ function displayCartItems(cart) {
                     <div id="qty">QUANTITY: ${item.quantity}</div>
                     <br>
                     <div class="edit-container">  <!-- Contenedor para el botón de edición -->
-                        <button id="btn_edit" class="edit-size" data-id="${item.productId._id}" data-size="${item.size}" data-sizes='${JSON.stringify(item.productId.sizes)}'>Edit</button>
+                        <button id="btn_edit" class="edit-size" data-quantity="${item.quantity}" data-id="${item.productId._id}" data-size="${item.size}" data-sizes='${JSON.stringify(item.productId.sizes)}'>Edit</button>
                     </div>
                     <div class="trash-icon-container">
                         <a href="#" class="trash-icon" onclick="removeFromCart('${item.productId._id}', '${item.size}')">
@@ -140,22 +139,16 @@ function displayCartItems(cart) {
             const currentSize = event.target.getAttribute('data-size');
             const sizesJson = event.target.getAttribute('data-sizes');  // Recuperamos la cadena JSON de las tallas
             const sizes = JSON.parse(sizesJson);  // Convertimos la cadena JSON de nuevo a un array
+            const currentQuantity = event.target.getAttribute('data-quantity')
     
-            showSizeOptions(event.target, productId, sizes, currentSize);
+            showSizeOptions(event.target, productId, sizes, currentSize, currentQuantity);
         });
     });
 }
 
-function showSizeOptions(button, productId, sizes, currentSize) {
-    let currentQuantity = 1;
-    const quantityInput = document.querySelector(`.quantity-input[data-id="${productId}"]`);
+function showSizeOptions(button, productId, sizes, currentSize, currentQuantity) {
+    console.log("current qty:", currentQuantity);
     
-    if (quantityInput) {
-        currentQuantity = parseInt(quantityInput.value);
-    }
-
-    console.log("Show size op current qty:", currentQuantity);
-
     let buttonsHTML = sizes.map(size => {
         const isSelected = size === currentSize ? 'selected-size' : '';
         return `<button class="size-btn ${isSelected}" onclick="confirmSizeChange('${productId}', '${currentSize}', '${size}', '${currentQuantity}', event)">${size}</button>`;
