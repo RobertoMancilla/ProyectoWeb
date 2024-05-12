@@ -84,7 +84,7 @@ router.post('/update-item/:productId', async (req, res) => {
         if (itemIndex > -1) {
             const productDetails = await Product.findById(productId);
 
-            if (newSize) {
+            if (newSize && newSize !== currentSize) {
                 cart.items[itemIndex].size = newSize;
             }
 
@@ -105,8 +105,6 @@ router.post('/update-item/:productId', async (req, res) => {
         res.status(500).send('Failed to update item in cart.');
     }
 });
-
-
 
 
 router.post('/remove/:productId/:size', async (req, res) => {

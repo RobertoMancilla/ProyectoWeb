@@ -20,11 +20,22 @@ async function loadCartProducts(userId) {
     }
 }
 
-function confirmSizeChange(productId, currentSize, newSize, event) {
-    console.log('Confirming size change to:', newSize);
-
+// update size or qty
+function confirmSizeChange(productId, currentSize, newSize, newQuantity, event) {
     const token = localStorage.getItem('jwt');
     const userId = jwt_decode(token).id;
+
+    const updateBody = {
+        userId,
+        currentSize: currentSize,  // Usa la nueva talla si esta disponible, si no, la actual
+        newSize: newSize || currentSize,
+    };
+
+    console.log("new body in update size or qty:", updateBody);
+
+    if (newQuantity !== null) {
+        updateBody.newQuantity = newQuantity;  // Solo añade la cantidad si realmente se ha modificado
+    }
 
     fetch(`/cart/update-item/${productId}`, {
         method: 'POST',
@@ -32,12 +43,7 @@ function confirmSizeChange(productId, currentSize, newSize, event) {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-            userId,
-            currentSize,
-            newSize,
-            newQuantity: null
-        })
+        body: JSON.stringify(updateBody)
     })
     .then(response => {
         if (!response.ok) {
@@ -101,7 +107,6 @@ function displayCartItems(cart) {
 
     let cardInCartHtml = '';
     cart.items.forEach((item) => {
-        const sizesJson = JSON.stringify(item.productId.sizes);  // Convertimos el array de tallas a una cadena JSON
 
         cardInCartHtml += `
             <div class="media border p-3 cart-product">
@@ -111,7 +116,7 @@ function displayCartItems(cart) {
                 <div class="media-body">
                     <h4>${item.productId.productName}</h4>
                     <div>SIZE: <span class="item-size">${item.size}</span></div>
-                    <div>QUANTITY: ${item.quantity}</div>
+                    <div id="qty">QUANTITY: ${item.quantity}</div>
                     <br>
                     <div class="edit-container">  <!-- Contenedor para el botón de edición -->
                         <button id="btn_edit" class="edit-size" data-id="${item.productId._id}" data-size="${item.size}" data-sizes='${JSON.stringify(item.productId.sizes)}'>Edit</button>
@@ -142,15 +147,52 @@ function displayCartItems(cart) {
 }
 
 function showSizeOptions(button, productId, sizes, currentSize) {
+    let currentQuantity = 1;
+    const quantityInput = document.querySelector(`.quantity-input[data-id="${productId}"]`);
+    
+    if (quantityInput) {
+        currentQuantity = parseInt(quantityInput.value);
+    }
+
+    console.log("Show size op current qty:", currentQuantity);
+
     let buttonsHTML = sizes.map(size => {
         const isSelected = size === currentSize ? 'selected-size' : '';
-        // Notice the change in the onclick attribute to pass 'event'
-        return `<button class="size-btn ${isSelected}" onclick="confirmSizeChange('${productId}', '${currentSize}', '${size}', event)">${size}</button>`;
+        return `<button class="size-btn ${isSelected}" onclick="confirmSizeChange('${productId}', '${currentSize}', '${size}', '${currentQuantity}', event)">${size}</button>`;
     }).join('');
 
     const editContainer = button.closest('.edit-container');
+
+    // Añadir controlador de cantidad
+    buttonsHTML += `
+        <div class="quantity-controller">
+            <button class="quantity-btn decrease" onclick="updateQuantity('${productId}', 'decrease', event)">-</button>
+            <input type="number" class="quantity-input" data-id="${productId}" value="${currentQuantity}" min="1">
+            <button class="quantity-btn increase" onclick="updateQuantity('${productId}', 'increase', event)">+</button>
+        </div>
+    `;
+
     editContainer.innerHTML = buttonsHTML;
 }
+
+function updateQuantity(productId, action) {
+    const quantityInput = document.querySelector(`.quantity-input[data-id="${productId}"]`);
+    let currentQuantity = parseInt(quantityInput.value);
+    let currentSize = quantityInput.closest('.cart-product').querySelector('.item-size').textContent;
+    
+    if (action === 'increase') {
+        // console.log("click increase");
+        currentQuantity++;
+    } else if (action === 'decrease' && currentQuantity > 1) {
+        // console.log("click decrease");
+        currentQuantity--;
+    }
+    quantityInput.value = currentQuantity;
+
+    // hacer update 
+    confirmSizeChange(productId, currentSize, currentSize, currentQuantity, event);
+}
+
 
 function displayOrderSummary(cart) {
     const summaryContainer = document.querySelector('.container .row .col-lg-4 .media-body');
