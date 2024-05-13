@@ -291,7 +291,6 @@ function deleteProduct(productId) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                // Eliminar la tarjeta del producto del DOM si la eliminación en el servidor fue exitosa
                 document.querySelector(`[data-product-id="${productId}"]`).closest(".cart-product").remove();
                 location.reload();
             } else {
