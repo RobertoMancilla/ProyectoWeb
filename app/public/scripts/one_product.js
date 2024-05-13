@@ -115,8 +115,8 @@ function mostrarDetallesProducto(producto) {
 // Función para generar los botones de tallas
 function generarBotonesTallas(sizes) {
     let buttonsHTML = '';
-    const availableSizes = sizes || []; // Si no hay tallas disponibles, usar un array vacío
-    const validSizes = ['S', 'M', 'L']; // Asegúrate de que estos valores coinciden con tus tallas válidas
+    const availableSizes = sizes || []; 
+    const validSizes = ['S', 'M', 'L']; 
     validSizes.forEach(size => {
         const isAvailable = availableSizes.includes(size);
         const buttonClass = 'size-btn' + (isAvailable ? '' : ' unavailable');

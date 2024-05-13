@@ -4,25 +4,30 @@ const bcrypt = require('bcrypt');
 async function getUserInfo(req, res) {
     const id = req.id;
     
-    const user = await User.findById(id);
+    try {
+        const user = await User.findById(id);
+        console.log(req.query);
 
-    console.log(req.query);
+        if (user) {
+            console.log("user info retrieved:", user);
 
-    if (user) {
-        console.log("user info:", user);
-
-        res.send({
-            name : user.name,
-            surname : user.surname,
-            email : user.email 
-        });
-        return;
-    } else {
-        res.status(404).send({
-            error : "user not found"
-        });
-        return;
+            res.send({
+                name : user.name,
+                surname : user.surname,
+                email : user.email 
+            });
+            return;
+        } else {
+            res.status(404).send({
+                error : "user not found"
+            });
+            return;
+        }
+    } catch (error) {
+        console.error("Failed to retrieve user:", error);
+        res.status(500).send({ error: "Internal Server Error" });
     }
+    
 }
 
 async function updateUser(req, res) {

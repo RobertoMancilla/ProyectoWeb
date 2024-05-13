@@ -62,4 +62,36 @@ document.addEventListener("DOMContentLoaded", function() {
             logInTextElement.innerText = 'Log In';   
         }
     }
+
+    var myModal = document.getElementById('myModalShowProfile');
+    myModal.addEventListener('show.bs.modal', function () {
+        fetchProfileInfo();
+    });
+
+    function fetchProfileInfo() {
+        // Supongamos que tienes almacenado el JWT en localStorage
+        const jwt = localStorage.getItem('jwt');
+        if (!jwt) {
+            console.warn('No JWT found, user is probably not logged in');
+            return;
+        }
+        fetch('/path-to-get-user-info', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${jwt}`,
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(user => {
+            document.getElementById('name_show').value = user.name || '';
+            document.getElementById('surname_show').value = user.surname || '';
+            document.getElementById('email_show').value = user.email || '';
+            // Asegúrate de manejar aquí también los campos de contraseña si es necesario
+        })
+        .catch(error => {
+            console.error('Failed to fetch user profile:', error);
+        });
+    }    
+
 });

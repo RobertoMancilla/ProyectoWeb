@@ -111,7 +111,44 @@
         </div>
       </div>
     </div>
-    
+
+    <!-- Modal para mostrar los datos del profile -->
+    <div class="modal fade" id="myModalShowProfile" tabindex="-1" aria-labelledby="modalTitleId" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitleId">Profile information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="showInfoForm">
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Name" id="name_show" />
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Surname" id="surname_show" />
+                </div>
+              </div>
+              <!-- Email -->
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-envelope" style="color: #464646"></i></span>
+                <input type="email" class="form-control" placeholder="Your Email" id="email_show" />
+              </div>
+              <!-- Contraseña -->
+              <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
+                <input type="password" class="form-control" placeholder="New Password" id="password_show" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" form="signupForm" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </head>
   <body>
 

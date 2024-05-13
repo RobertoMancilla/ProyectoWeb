@@ -5,6 +5,10 @@ const wishlistItemSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,  // ObjectId
         ref: 'products',  
         required: true
+    },
+    size : {
+        type : String,
+        required: true
     }
 });
 
@@ -15,7 +19,7 @@ const wishlistSchema = new mongoose.Schema({
         ref: 'users',  // Referencia al modelo de usuarios
         required: true
     }, 
-    items: [wishlistItemSchema]
+    items: [wishlistItemSchema],
 });
 
 const Wishlist = mongoose.model('wishlist', wishlistSchema);  

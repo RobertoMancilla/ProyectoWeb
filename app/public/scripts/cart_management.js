@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (productContainer) {
         productContainer.addEventListener('click', function(event) {
             if (event.target.id === 'btnAddToBag') {
+                console.log("hola???");
                 addToCart();
             } else if (event.target.classList.contains('size-btn') && !event.target.disabled) {
                 handleSizeSelection(event.target);
             } else if (event.target.closest('.btn-favorite')) {  // Comprueba si el elemento que provocó el clic está dentro de un botón de favoritos
                 const productId = new URLSearchParams(window.location.search).get('id');
-                console.log("favorite btn");
                 addToWishlist(productId);
             }
         });
@@ -88,44 +88,52 @@ function addToCart() {
 async function addToWishlist(productId) {
     const token = localStorage.getItem('jwt');
     if (!token) {
-        alert('You must be logged in to add items to your wishlist');
+        Swal.fire({
+            title: 'Login Required',
+            text: 'You must be logged in to add items to your wishlist',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+    // Obtener la talla seleccionada
+    const selectedSizeButton = document.querySelector('.size-btn.selected-size');
+    const selectedSize = selectedSizeButton ? selectedSizeButton.textContent : null;
+    if (!selectedSize) {
+        alert('Please select a size before adding to cart.');
         return;
     }
 
     try {
-        const token = localStorage.getItem('jwt');
-        let userId = null;
+        const decoded = jwt_decode(token);  // Decodificar el token para obtener el ID del usuario
+        const userId = decoded.id;
 
-        if (token) {
-            try {
-                const decoded = jwt_decode(token);
-                userId = decoded.id;
-            } catch (error) {
-                console.error('Error decoding JWT:', error);
-                alert('Error processing your authentication token. Please login again.');
-                return;
-            }
-        }
-
-        const response = await fetch('/new/wishlist/add-item', {  // Asegúrate de que esta URL es correcta
+        const response = await fetch('/new/wishlist/add-item', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({userId, productId })
+            body: JSON.stringify({ userId, productId, selectedSize })
         });
 
-        console.log("user id front:", userId);
-        console.log("product id front:", productId);
-
-        if (!response.ok) {
-            throw new Error('Failed to add product to wishlist');
+        if (response.status === 409) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Article in Wishlist',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } else if (!response.ok) {
+            const errorText = await response.text(); 
+            throw new Error(`Failed to add product to wishlist: ${errorText}`);
+        } else {
+            console.log('Product added to wishlist successfully!');
+            window.location.href = '/wishlist';
         }
-
-        alert('Product added to wishlist successfully!');
     } catch (error) {
         console.error('Error adding product to wishlist:', error);
-        alert('Error adding product to wishlist. Please try again.');
+        alert(`Error adding product to wishlist. Please try again. Details: ${error.message}`);
     }
 }
