@@ -89,10 +89,12 @@ router.post('/update-item/:productId', async (req, res) => {
             }
 
             // Solo actualizamos la cantidad si `newQuantity` es un número válido y no supera el stock
-            if (newQuantity !== null && newQuantity <= productDetails.stock) {
-                cart.items[itemIndex].quantity = newQuantity;
-            } else if (newQuantity !== null) {  // Error específico para la cantidad excediendo el stock
-                return res.status(400).send(`Cannot exceed stock quantity of ${productDetails.stock}.`);
+            if (newQuantity !== null) {
+                if (newQuantity <= productDetails.stock) {
+                    cart.items[itemIndex].quantity = newQuantity;
+                } else {  // Error específico para la cantidad excediendo el stock
+                    return res.status(400).send(`Cannot exceed stock quantity of ${productDetails.stock}.`);
+                }
             }
 
             const updatedCart = await cart.save();

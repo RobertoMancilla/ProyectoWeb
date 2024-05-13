@@ -177,3 +177,36 @@
     background-color: #E2DCC9; 
     color: black; 
 }
+
+/* Estilos específicos para los botones de incremento y decremento */
+.quantity-btn {
+    border-radius: 30%;  /* Hace los botones parcialmente redondos */
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px 10px; /* Reducir el padding para hacer el botón menos ancho */
+}
+
+/* Estilos para el input de cantidad */
+.quantity-input {
+    box-sizing: border-box !important;
+    background-color: white !important;
+    text-align: center !important;  /* Centra el texto horizontalmente */
+    width: 50px;         /* Define un ancho fijo para el input */
+    height: 30px;        /* Define una altura fija para centrar verticalmente */
+    padding: 0;          /* Elimina el padding interno para evitar desplazamientos */
+    margin: 0 5px;       /* Espacio a los lados para separar de los botones */
+    border: none;
+    border-radius: 5px;  /* Bordes ligeramente redondeados */
+    line-height: 30px;   /* Alinea el texto verticalmente al centro */
+    font-size: 16px;     /* Tamaño de fuente adecuado para la visibilidad */
+}
+
+/* Estilos para el contenedor de los controles de cantidad */
+.quantity-controller {
+    display: flex;      /* Alinea horizontalmente los elementos */
+    align-items: center; /* Alinea verticalmente los elementos al centro */
+    margin-top: 15px;
+}

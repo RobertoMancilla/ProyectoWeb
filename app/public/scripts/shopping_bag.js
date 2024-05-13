@@ -45,7 +45,12 @@ function confirmSizeChange(productId, currentSize, newSize, newQuantity, event) 
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update size.');
+            if (response.status === 400) {
+                alert('Quantity exceeds stock.');
+                toggleEditAndView(event.target);
+            } else {
+                throw new Error('Failed to update size.');
+            }
         }
         return response.json();
     })
@@ -129,6 +134,7 @@ function displayCartItems(cart) {
                 <div class="product-price"><h4>$${item.productId.price}</h4></div>
             </div>
         `;
+        
     });
 
     container.innerHTML = cardInCartHtml;
@@ -159,8 +165,8 @@ function showSizeOptions(button, productId, sizes, currentSize, currentQuantity)
     // Añadir controlador de cantidad
     buttonsHTML += `
         <div class="quantity-controller">
-            <button class="quantity-btn decrease" onclick="updateQuantity('${productId}', 'decrease', event)">-</button>
-            <input type="number" class="quantity-input" data-id="${productId}" value="${currentQuantity}" min="1">
+            <button id="decrease-btn" class="quantity-btn decrease" onclick="updateQuantity('${productId}', 'decrease', event)">-</button>
+            <input type="number" class="quantity-input" data-id="${productId}" value="${currentQuantity}" min="1" disabled>
             <button class="quantity-btn increase" onclick="updateQuantity('${productId}', 'increase', event)">+</button>
         </div>
     `;
@@ -172,20 +178,31 @@ function updateQuantity(productId, action) {
     const quantityInput = document.querySelector(`.quantity-input[data-id="${productId}"]`);
     let currentQuantity = parseInt(quantityInput.value);
     let currentSize = quantityInput.closest('.cart-product').querySelector('.item-size').textContent;
-    
+
+    const decreaseButton = document.getElementById('decrease-btn');
+
+    // Verificar y ajustar el cursor cuando se carga la página o se realiza una acción
+    if (currentQuantity === 1) {
+        console.log("juan");
+        decreaseButton.style.cursor = 'not-allowed';
+    } else {
+        decreaseButton.style.cursor = 'auto';
+    }
+
     if (action === 'increase') {
-        // console.log("click increase");
         currentQuantity++;
     } else if (action === 'decrease' && currentQuantity > 1) {
-        // console.log("click decrease");
         currentQuantity--;
+    } else if (action === 'decrease' && currentQuantity === 1) {
+        // Si la acción es disminuir y la cantidad es 1, no hacer nada
+        return;
     }
+
     quantityInput.value = currentQuantity;
 
     // hacer update 
     confirmSizeChange(productId, currentSize, currentSize, currentQuantity, event);
 }
-
 
 function displayOrderSummary(cart) {
     const summaryContainer = document.querySelector('.container .row .col-lg-4 .media-body');
