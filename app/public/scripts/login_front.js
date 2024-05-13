@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const loginForm = document.getElementById('loginForm');
     const logInTextElement = document.getElementById('log_in');
 
+    const myModalLogIn = document.getElementById('myModalLogIn');
+    const modalLogIn = new bootstrap.Modal(myModalLogIn); 
+
     // Verifica si el usuario ya está logueado
     checkUserLogin();
 
@@ -32,9 +35,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 logInTextElement.onclick = openProfileModal;
 
-                // var myModalEl = document.getElementById('myModalLogIn');
-                // var modal = bootstrap.Modal.getInstance(myModalEl);
-                // modal.hide();
+                // console.log("Login successful, closing modal.");
+                // modalLogIn.hide();
+                window.location.reload(); // Reload the page to update the wishlist display
 
                 Swal.fire({
                     icon: "success",
@@ -48,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
         .catch(error => {
+            console.error("Error during login or modal operation:", error);
             Swal.fire({
                 icon: "error",
                 title: "Login Failed",
@@ -68,10 +72,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function openProfileModal() {
-        var myModalLogIn = document.getElementById('myModalLogIn');
-        var modalLogIn = bootstrap.Modal.getInstance(myModalLogIn);
-        modalLogIn.hide();
-
         const myModalEl = document.getElementById('myModalShowProfile');
         const modal = new bootstrap.Modal(myModalEl);
         modal.show();

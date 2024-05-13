@@ -72,7 +72,7 @@ async function registerUser(req, res) {
         }
 
         // Crear el usuario con la información proporcionada
-        const hashedPassword = bcrypt.hashSync(password, 10); // Asegurarse de hash la contraseña antes de guardarla
+        const hashedPassword = bcrypt.hashSync(password, 10);
         const newUser = new User({
             email: email,
             password: hashedPassword,

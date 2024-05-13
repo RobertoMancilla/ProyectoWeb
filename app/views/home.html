@@ -49,7 +49,7 @@
                 </label>
               </div>
               <div id="btn_submit_modal">
-              <button type="submit" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
+                <button type="submit" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
               </div>
             </form>
           </div>
@@ -124,26 +124,42 @@
             <form id="showInfoForm">
               <div class="row mb-3">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Name" id="name_show" />
+                  <input type="text" class="form-control" placeholder="Name" id="name_show" disabled />
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Surname" id="surname_show" />
+                  <input type="text" class="form-control" placeholder="Surname" id="surname_show" disabled />
                 </div>
               </div>
               <!-- Email -->
               <div class="input-group mb-3">
                 <span class="input-group-text"><i class="fa-solid fa-envelope" style="color: #464646"></i></span>
-                <input type="email" class="form-control" placeholder="Your Email" id="email_show" />
+                <input type="email" class="form-control" placeholder="Your Email" id="email_show" disabled />
               </div>
               <!-- Contraseña -->
-              <div class="input-group mb-3">
-                <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
-                <input type="password" class="form-control" placeholder="New Password" id="password_show" />
+              <div id="passwordFields" style="display: none;">
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646"></i></span>
+                  <input type="password" class="form-control" placeholder="Old Password" id="password_show" disabled/>
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646;"></i></span>
+                  <input type="password" class="form-control" placeholder="New Password" id="new_password_show" disabled/>
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-key" style="color: #464646;"></i></span>
+                  <input type="password" class="form-control" placeholder="Confirm New Password" id="confirm_new_password_show" disabled/>
+                </div>
               </div>
             </form>
           </div>
-          <div class="modal-footer">
-            <button type="submit" form="signupForm" class="btn btn-success" style="background-color: #aaa596; border: none;">Submit</button>
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="btn btn-dark" id="logoutButton">Log Out</button>
+            <button type="button" class="btn btn-danger" id="deleteProfile" style="display: none;">Delete</button>
+            <div class="ms-auto">
+              <button type="button" form="signupForm" class="btn btn-success" id="editButton" style="background-color: #aaa596; border: none;">Edit</button>
+              <button type="button" class="btn btn-success" id="confirmButton" style="display: none; background-color: #aaa596; border: none;">Confirm</button>
+              <button type="button" class="btn btn-dark" id="cancelButton" style="display: none;" data-bs-dismiss="modal">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
@@ -241,6 +257,7 @@
 
     <script src="/scripts/singup_front.js"></script>
     <script src="/scripts/login_front.js"></script>
+    <script src="/scripts/user-info.js"></script>
     <script src="/scripts/home.js"></script>
 
     <script>
