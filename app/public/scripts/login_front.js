@@ -1,43 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
     const loginForm = document.getElementById('loginForm');
-    const logInTextElement = document.getElementById('log_in');
 
-    const myModalLogIn = document.getElementById('myModalLogIn');
-    const modalLogIn = new bootstrap.Modal(myModalLogIn); 
-
-    // Verifica si el usuario ya está logueado
-    checkUserLogin();
+    checkUserLogin();  // Verifica si el usuario está logueado al cargar la página.
 
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
-
         const email = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
-
         fetch('/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
         })
-        .then(response => response.json().then(data => ({
-            status: response.status,
-            data
-        })))
+        .then(response => response.json().then(data => ({ status: response.status, data })))
         .then(result => {
             if (result.status === 200) {
                 localStorage.setItem('jwt', result.data.sToken);
-                logInTextElement.innerText = 'Profile';
+                checkUserLogin();
 
-                logInTextElement.onclick = openProfileModal;
-
-                // console.log("Login successful, closing modal.");
-                // modalLogIn.hide();
-                window.location.reload(); // Reload the page to update the wishlist display
+                var myModalEl = document.getElementById('myModalLogIn');
+                var modalLogIn = bootstrap.Modal.getInstance(myModalEl);
+                modalLogIn.hide();
 
                 Swal.fire({
                     icon: "success",
@@ -51,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
         .catch(error => {
-            console.error("Error during login or modal operation:", error);
             Swal.fire({
                 icon: "error",
                 title: "Login Failed",
@@ -61,26 +43,27 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    document.getElementById('profile_link').addEventListener('click', function() {
+        fetchProfileInfo();  // Función que carga los datos del perfil
+    });
+
     function checkUserLogin() {
-        if (localStorage.getItem('jwt')) {
-            logInTextElement.innerText = 'Profile';
-            logInTextElement.onclick = openProfileModal;  
+        const jwt = localStorage.getItem('jwt');
+        const logInLink = document.getElementById('log_in');
+        const profileLink = document.getElementById('profile_link');
+    
+        if (jwt) {
+            logInLink.style.display = 'none';        // Oculta el enlace de Log in
+            profileLink.style.display = 'block';     // Muestra el enlace de Profile
         } else {
-            logInTextElement.innerText = 'Log In';
-            logInTextElement.onclick = null;  
+            logInLink.style.display = 'block';       // Muestra el enlace de Log in
+            profileLink.style.display = 'none';      // Oculta el enlace de Profile
         }
     }
-
-    function openProfileModal() {
-        const myModalEl = document.getElementById('myModalShowProfile');
-        const modal = new bootstrap.Modal(myModalEl);
-        modal.show();
-        fetchProfileInfo();
-    }
+    
 
     function fetchProfileInfo() {
         const token = localStorage.getItem('jwt');
-        
         if (!token) {
             console.warn('No JWT found, user is probably not logged in');
             return;
@@ -97,11 +80,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById('name_show').value = user.name || '';
             document.getElementById('surname_show').value = user.surname || '';
             document.getElementById('email_show').value = user.email || '';
-            // Asegúrate de manejar aquí también los campos de contraseña si es necesario
         })
         .catch(error => {
             console.error('Failed to fetch user profile:', error);
         });
     }    
-    
 });
