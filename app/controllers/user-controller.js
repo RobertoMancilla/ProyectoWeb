@@ -9,7 +9,7 @@ async function getUserInfo(req, res) {
         console.log(req.query);
 
         if (user) {
-            console.log("user info retrieved:", user);
+            console.log("user info:", user);
 
             res.send({
                 name : user.name,

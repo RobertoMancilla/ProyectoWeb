@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 localStorage.setItem('jwt', result.data.sToken);
                 logInTextElement.innerText = 'My Account';
 
+                
                 var myModalEl = document.getElementById('myModalLogIn');
                 var modal = bootstrap.Modal.getInstance(myModalEl);
                 modal.hide();
@@ -58,24 +59,32 @@ document.addEventListener("DOMContentLoaded", function() {
     function checkUserLogin() {
         if (localStorage.getItem('jwt')) {
             logInTextElement.innerText = 'My Account';
+            logInTextElement.onclick = openProfileModal;  
         } else {
-            logInTextElement.innerText = 'Log In';   
+            logInTextElement.innerText = 'Log In';
+            logInTextElement.onclick = null;  
         }
     }
 
-    var myModal = document.getElementById('myModalShowProfile');
-    myModal.addEventListener('show.bs.modal', function () {
+    function openProfileModal() {
+        var myModalLogIn = document.getElementById('myModalLogIn');
+        var modalLogIn = bootstrap.Modal.getInstance(myModalLogIn);
+        modalLogIn.hide();
+
+        const myModalEl = document.getElementById('myModalShowProfile');
+        const modal = new bootstrap.Modal(myModalEl);
+        modal.show();
         fetchProfileInfo();
-    });
+    }
 
     function fetchProfileInfo() {
-        // Supongamos que tienes almacenado el JWT en localStorage
         const jwt = localStorage.getItem('jwt');
+        
         if (!jwt) {
             console.warn('No JWT found, user is probably not logged in');
             return;
         }
-        fetch('/path-to-get-user-info', {
+        fetch('/login', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${jwt}`,
@@ -93,5 +102,8 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Failed to fetch user profile:', error);
         });
     }    
-
+    
 });
+
+
+

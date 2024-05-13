@@ -7,6 +7,7 @@ const cartRouter = require('../routes/cart_routes.js');
 const wishlistRouter = require('../routes/wishlist-routes.js');
 
 const auth = require('../controllers/auth-controllers.js')
+const userRouter = require('../controllers/user-controller.js')
 
 
 const stripe = require("stripe")("sk_test_51PDGq1LzpsDqoDSLDAFIC4RBAR54OWFDDnRZZxWO3Ui4y2LWJYwUZ3hUM3Htm5bF0FmsTaQvPOSeeerWQquVGAZ300o5Ylf8MO")
@@ -36,6 +37,8 @@ router.use('/new/wishlist', wishlistRouter);
 router.post('/signup', auth.registerUser);
 //log in
 router.post('/login', auth.loginUser);
+
+router.get('/user', userRouter);
 
 
 //checkout
