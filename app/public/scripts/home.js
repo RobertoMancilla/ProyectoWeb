@@ -68,7 +68,7 @@ function generarContenedoresDeCategorias(productosPorCategoria) {
             containerHTML += `
                     </div>
                 </div>
-                <br> <!-- Salto de línea después del contenedor de productos -->
+                <br> 
             `;
             // Agregar el contenedor al contenedor principal
             productsContainer.innerHTML += containerHTML;
