@@ -78,16 +78,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function fetchProfileInfo() {
-        const jwt = localStorage.getItem('jwt');
+        const token = localStorage.getItem('jwt');
         
-        if (!jwt) {
+        if (!token) {
             console.warn('No JWT found, user is probably not logged in');
             return;
         }
-        fetch('/login', {
+        fetch('/user/info', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${jwt}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             }
         })
@@ -104,6 +104,3 @@ document.addEventListener("DOMContentLoaded", function() {
     }    
     
 });
-
-
-

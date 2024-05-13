@@ -1,28 +1,26 @@
 const jwt = require("jsonwebtoken");
 
 function verifyAuthToken(req, res, next) {
-    const sToken = req.get("x-auth");
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN_HERE
 
-    if(sToken && sToken!=''){
-        var decoded;
+    if (token) {
         try {
-            decoded=jwt.verify(sToken, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.email = decoded.email;
             req.id = decoded.id;
             next();
-            return;
         } catch (error) {
             res.status(401).send({
-                error: "Invalid x-auth token"
+                error: "Invalid Authentication token"
             });
-            return;
         }
-    }else{
+    } else {
         res.status(400).send({
-            error: "Missing or bad x-auth token"
+            error: "Authentication token is missing"
         });
-        return;
     }
 }
+
 
 module.exports = {verifyAuthToken}
