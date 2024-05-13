@@ -28,12 +28,13 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(result => {
             if (result.status === 200) {
                 localStorage.setItem('jwt', result.data.sToken);
-                logInTextElement.innerText = 'My Account';
+                logInTextElement.innerText = 'Profile';
 
-                
-                var myModalEl = document.getElementById('myModalLogIn');
-                var modal = bootstrap.Modal.getInstance(myModalEl);
-                modal.hide();
+                logInTextElement.onclick = openProfileModal;
+
+                // var myModalEl = document.getElementById('myModalLogIn');
+                // var modal = bootstrap.Modal.getInstance(myModalEl);
+                // modal.hide();
 
                 Swal.fire({
                     icon: "success",
@@ -58,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function checkUserLogin() {
         if (localStorage.getItem('jwt')) {
-            logInTextElement.innerText = 'My Account';
+            logInTextElement.innerText = 'Profile';
             logInTextElement.onclick = openProfileModal;  
         } else {
             logInTextElement.innerText = 'Log In';

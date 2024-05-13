@@ -20,6 +20,6 @@ router.get('/info', verifyAuthToken, async (req, res) => {
 });
 
 // Modify user data
-router.put('/', userController.updateUser);
+// router.put('/', userController.updateUser);
 
 module.exports = router;

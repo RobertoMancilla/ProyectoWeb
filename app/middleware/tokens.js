@@ -5,12 +5,15 @@ function verifyAuthToken(req, res, next) {
     const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN_HERE
 
     if (token) {
+        console.log("Token encontrado, procesando...");
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, "keySecret");
+            console.log("Token válido, usuario autorizado:", decoded.email);
             req.email = decoded.email;
             req.id = decoded.id;
             next();
         } catch (error) {
+            console.log("Token inválido:", error.message);
             res.status(401).send({
                 error: "Invalid Authentication token"
             });
