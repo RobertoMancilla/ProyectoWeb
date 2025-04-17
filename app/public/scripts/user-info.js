@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('Error deleting profile: ' + data.error);
           } else {
             alert('Profile deleted successfully.');
-            localStorage.removeItem('jwt'); 
+            localStorage.removeItem('jwt'); F
             window.location.href = '/home'; // Redirecciona al usuario después de eliminar el perfil
           }
         })
